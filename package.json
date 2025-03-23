@@ -1,0 +1,37 @@
+{
+  "name": "agnis",
+  "version": "0.0.1",
+  "description": "Adaptive Goal-driven Neural Intelligence System",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "debug": "parcel --no-cache index.html",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devmagda/AGNIS.git"
+  },
+  "keywords": [
+    "agnis",
+    "ai",
+    "npc",
+    "simulation",
+    "ts",
+    "goap",
+    "goals",
+    "needs",
+    "stats",
+    "actions"
+  ],
+  "author": "Magdalena Johannssen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devmagda/AGNIS/issues"
+  },
+  "homepage": "https://github.com/devmagda/AGNIS#readme",
+  "devDependencies": {
+    "parcel": "^2.14.1",
+    "typescript": "^5.8.2"
+  }
+}
