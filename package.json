@@ -6,7 +6,7 @@
     "start": "parcel index.html",
     "build": "parcel build index.html",
     "debug": "parcel --no-cache index.html",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,11 @@
   },
   "homepage": "https://github.com/devmagda/AGNIS#readme",
   "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/mathjs": "^9.4.1",
+    "mathjs": "^14.3.1",
     "parcel": "^2.14.1",
+    "ts-jest": "^29.2.6",
     "typescript": "^5.8.2"
   }
 }
