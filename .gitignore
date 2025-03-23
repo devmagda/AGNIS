@@ -29,3 +29,5 @@ yarn-error.log*
 # Temporary files
 *.swp
 *.swo
+
+TODO.txt
