@@ -6,9 +6,13 @@ export default class Controller {
     _model: Model;
     _view: View;
 
-    constructor() {
-        this._model = new Model();
-        this._view = new View();
+    constructor(canvas: HTMLCanvasElement) {
+        this._model = Model.empty();
+        this._view = new View(canvas);
+    }
+
+    set model(model: Model) {
+        this._model = model;
     }
 
     get model() {
@@ -20,13 +24,21 @@ export default class Controller {
     }
 
     update(): void {
-        this.model.update();
-        this.view.update(this.model);
+        console.debug('Updating controller', this);
+        this._model.update();
+        this._view.update(this._model);
     }
 
-    static defaultConfig(): Controller {
-        const defaultController = new Controller();
-        defaultController._model.add(new ModelEntity(1, new Vector2D(0, 0)));
+    reload(): void {
+        console.debug("Reloading controller", this);
+        this._model = Model.defaultConfig();
+        this._view.update(this._model);
+    }
+
+    static defaultConfig(canvas: HTMLCanvasElement): Controller {
+        const defaultController = new Controller(canvas);
+        defaultController.model = Model.defaultConfig();
+        defaultController.view.update(defaultController.model);
         return defaultController;
     }
 }
