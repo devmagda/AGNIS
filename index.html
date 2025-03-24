@@ -1,12 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Parcel + TypeScript</title>
-  </head>
-  <body>
-    <h1>Parcel + TypeScript Setup</h1>
-    <script type="module" src="./src/index.ts"></script>
-  </body>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AGNIS - Game</title>
+</head>
+<body>
+
+<script type="module" src="./src/index.ts"></script>
+
+<div id="navigation">
+    <h3>A.G.N.I.S – Algorithmic Guidance for Needs & Interactions System</h3>
+</div>
+
+<div id="content">
+    <div id="game">
+        <canvas id="view"></canvas>
+    </div>
+    <div id="settings">
+        <h5>Settings</h5>
+        <button class="btn btn-custom w-100 mt-2">Option 1</button>
+        <button class="btn btn-custom w-100 mt-2">Option 2</button>
+        <button class="btn btn-custom w-100 mt-2">Option 3</button>
+    </div>
+</div>
+
+<div id="footer">
+    <button class="btn btn-custom">
+        <img src="./src/assets/ui/play.svg" alt="Play" class="icon">
+    </button>
+    <button class="btn btn-custom">
+        <img src="./src/assets/ui/pause.svg" alt="Pause" class="icon">
+    </button>
+    <button class="btn btn-custom">
+        <img src="./src/assets/ui/next.svg" alt="Next" class="icon">
+    </button>
+    <button class="btn btn-custom">
+        <img src="./src/assets/ui/reload.svg" alt="Reload" class="icon">
+    </button>
+</div>
+
+
+</body>
 </html>
