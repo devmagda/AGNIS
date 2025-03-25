@@ -11,9 +11,7 @@ class View {
     }
 
     update(model: Model) {
-        model.data.forEach((entity: ModelEntity) => {
-            console.log(`Entity at position: (${entity.position.x}, ${entity.position.y})`);
-        });
+        this._lastModel = model;
     }
 }
 
@@ -21,13 +19,13 @@ class ViewCanvas extends View {
     _canvas: HTMLCanvasElement;
     _context: CanvasRenderingContext2D;
 
-    canvasSize = 1000;
+    static canvasSize = 1000;
 
     constructor(canvas: HTMLCanvasElement) {
         super();
         this._canvas = canvas;
-        this._canvas.width = this.canvasSize;
-        this._canvas.height = this.canvasSize;
+        this._canvas.width = ViewCanvas.canvasSize;
+        this._canvas.height = ViewCanvas.canvasSize;
         const context = canvas.getContext("2d");
         if (context) {
             this._context = context;
@@ -38,7 +36,7 @@ class ViewCanvas extends View {
     }
 
     update(model: Model): void {
-        this._lastModel = model;
+        super.update(model);
 
         // Clear the canvas before drawing
         this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
@@ -47,7 +45,6 @@ class ViewCanvas extends View {
             if(entity satisfies Drawable) {
                 entity.draw(this._context);
             }
-            console.log(`Entity at position: (${entity.position.x}, ${entity.position.y})`);
         });
     }
 }

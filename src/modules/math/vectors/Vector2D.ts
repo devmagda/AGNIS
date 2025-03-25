@@ -1,6 +1,6 @@
 import * as math from 'mathjs';
 
-class Vector2D {
+export default class Vector2D {
     private _position: math.Matrix;
 
     constructor(x: number, y: number) {
@@ -66,27 +66,3 @@ class Vector2D {
         this.limit = 1;  // Normalizing by limiting the vector's magnitude to 1
     }
 }
-
-class VectorUtil {
-    static add(a: Vector2D, b: Vector2D): Vector2D {
-        const resultPosition = math.add(a.position, b.position);
-        return new Vector2D(resultPosition.get([0]), resultPosition.get([1]));
-    }
-
-    static subtract(a: Vector2D, b: Vector2D): Vector2D {
-        const resultPosition = math.subtract(a.position, b.position);
-        return new Vector2D(resultPosition.get([0]), resultPosition.get([1]));
-    }
-
-    static multiply(a: Vector2D, factor: number): Vector2D {
-        const resultPosition = math.multiply(a.position, factor);
-        return new Vector2D(resultPosition.get([0]), resultPosition.get([1]));
-    }
-
-    static distance(a: Vector2D, b: Vector2D): number {
-        const diff = VectorUtil.subtract(a, b);
-        return diff.magnitude;
-    }
-}
-
-export {Vector2D, VectorUtil};

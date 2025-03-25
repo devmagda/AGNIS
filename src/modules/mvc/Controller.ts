@@ -1,6 +1,5 @@
-import { Vector2D } from "../math/vectors/Vectors";
-import {Model, ModelEntity} from "./Model";
 import {View} from "./View";
+import {Model} from "./Model";
 
 export default class Controller {
     _model: Model;
@@ -24,13 +23,11 @@ export default class Controller {
     }
 
     update(): void {
-        console.debug('Updating controller', this);
         this._model.update();
         this._view.update(this._model);
     }
 
     reload(): void {
-        console.debug("Reloading controller", this);
         this._model = Model.defaultConfig();
         this._view.update(this._model);
     }

@@ -1,5 +1,6 @@
 import * as math from "mathjs";
-import {Vector2D, VectorUtil} from "../src/modules/math/vectors/Vectors";
+import Vector2D from "../src/modules/math/vectors/Vector2D";
+import VectorUtil from "../src/modules/math/vectors/VectorUtil";
 
 describe('Vector2D', () => {
     test('should create a vector with given x and y', () => {

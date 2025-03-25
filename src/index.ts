@@ -1,12 +1,19 @@
 import "./imports";
-import { Vector2D } from "./modules/math/vectors/Vectors";
 import Controller from "./modules/mvc/Controller";
 import { ButtonIds } from "./constants";
 import Game from "./Game";
 import {View, ViewCanvas} from "./modules/mvc/View";
+import Entity from "./entities/Entity";
+import VectorUtil from "./modules/math/vectors/VectorUtil";
 
 const game = new Game();
-const controller = Controller.defaultConfig(new ViewCanvas(game.canvas));
+const controller = new Controller(new ViewCanvas(game.canvas));
+
+controller.model.add(new Entity(1 ,VectorUtil.getRandom(VectorUtil.canvasSize()), 10));
+controller.model.add(new Entity(2 ,VectorUtil.getRandom(VectorUtil.canvasSize()), 10));
+controller.model.add(new Entity(3 ,VectorUtil.getRandom(VectorUtil.canvasSize()), 10));
+
+controller.view.update(controller.model);
 
 let isPlaying = false;
 let lastFrameTime = 0;
