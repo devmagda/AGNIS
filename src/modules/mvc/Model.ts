@@ -3,7 +3,14 @@ import {Vector2D} from "../math/vectors/Vectors";
 class Model {
     _data: Map<number, ModelEntity>;
 
+    _lastIdx: number;
+
     constructor() {
+        this._data = new Map();
+        this._lastIdx = 0;
+    }
+
+    reload() {
         this._data = new Map();
     }
 
@@ -16,23 +23,26 @@ class Model {
     }
 
     add(entity: ModelEntity): void {
-        const count = this._data.size;
-        this._data.set(entity.id, entity);
+        this._data.set(this._lastIdx++, entity);
+    }
+
+    static defaultConfig() {
+        const model = new Model();
+        model.add(new ModelEntity(new Vector2D(0, 0)));
+        return model;
+    }
+
+    static empty() {
+        return new Model();
     }
 }
 
 class ModelEntity {
-    _id: number;
     _position: Vector2D;
 
 
-    constructor(id: number, position: Vector2D) {
-        this._id = id;
+    constructor(position: Vector2D) {
         this._position = position;
-    }
-
-    get id(): number {
-        return this._id;
     }
 
     get position() {

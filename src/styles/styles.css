@@ -1,0 +1,133 @@
+/* 🌑 Core Dark Theme */
+:root {
+    --bg-primary: #140a12; /* Almost Black with a Hint of Wine */
+    --bg-secondary: #1d0e18; /* Darker Berry */
+    --bg-highlight: #2a1323; /* Deep Mauve */
+    --border-color: #4a2344; /* Muted Plum */
+    --text-primary: #ffd6e0; /* Soft Blush */
+    --text-secondary: #b58aa0; /* Muted Rose */
+
+    /* 🎨 Accent Colors */
+    --accent-primary: #ff6699; /* Rosy Pink */
+    --accent-hover: #ff85aa; /* Soft Blush */
+    --accent-active: #e65387; /* Deep Raspberry */
+    --accent-alt: #c08cff; /* Lavender Glow */
+    --accent-alt-hover: #d5aaff; /* Softer Lavender */
+
+    /* 🔘 Button Colors */
+    --btn-bg: #4a1d3e; /* Darker Berry */
+    --btn-text: var(--accent-primary);
+    --btn-border: var(--accent-primary);
+    --btn-hover-bg: var(--accent-primary);
+    --btn-hover-text: var(--bg-primary);
+
+    /* 🎛 UI Panel Colors */
+    --panel-bg: var(--bg-secondary);
+    --panel-border: #693a68; /* Deeper Plum */
+
+    /* ✅ Success / Danger / Warning */
+    --success: #99ffcc; /* Mint Green */
+    --danger: #ff3366; /* Vibrant Cherry */
+    --warning: #ffcc88; /* Warm Peach */
+}
+
+/* General Reset */
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Fullscreen Layout */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Navigation Bar */
+#navigation {
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    background-color: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--border-color);
+}
+
+/* Main Content */
+#content {
+    display: flex;
+    height: 90vh;
+    flex-grow: 1;
+}
+
+/* Game Canvas Section */
+#game {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-highlight);
+    border-radius: 10px;
+}
+
+#view {
+    width: 90vh;
+    height: 90vh;
+    background-color: #000;
+    border: 3px solid var(--panel-border);
+    border-radius: 8px;
+}
+
+/* Settings Panel (Right Side) */
+#settings {
+    width: 250px;
+    background: var(--panel-bg);
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+
+}
+
+h5 {
+    color: var(--accent-primary) !important;
+    text-align: center;
+}
+
+
+/* Footer */
+#footer {
+    height: 5vh;
+    display: flex;
+    align-items: start;
+    background-color: var(--bg-secondary);
+    border-top: 2px solid var(--border-color);
+    gap: 10px;
+    padding: 5px;
+    img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Buttons */
+.btn.btn-custom {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid var(--btn-border);
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn.btn-custom:hover {
+    background: var(--btn-hover-bg);
+    color: var(--btn-hover-text);
+    border-color: var(--accent-hover);
+}
+
