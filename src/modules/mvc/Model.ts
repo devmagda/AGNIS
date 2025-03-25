@@ -1,4 +1,5 @@
 import {Vector2D} from "../math/vectors/Vectors";
+import {Drawable} from "./View";
 
 class Model {
     _data: Map<number, ModelEntity>;
@@ -37,7 +38,7 @@ class Model {
     }
 }
 
-class ModelEntity {
+class ModelEntity implements Drawable {
     _position: Vector2D;
 
 
@@ -56,6 +57,11 @@ class ModelEntity {
     update(): void {
         this._position.x += 1;
         this._position.y += 1;
+    }
+
+    draw(ctx: CanvasRenderingContext2D): void {
+        ctx.fillStyle = "white"; // Set fill color
+        ctx.fillRect(this._position.x, this._position.y, 10, 10); // Draw 10x10 rectangle
     }
 }
 

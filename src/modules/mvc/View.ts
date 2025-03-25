@@ -1,5 +1,9 @@
 import {Model, ModelEntity} from "./Model";
 
+interface Drawable {
+    draw(ctx: CanvasRenderingContext2D): void;
+}
+
 class View {
     _lastModel: Model;
     constructor() {
@@ -40,12 +44,12 @@ class ViewCanvas extends View {
         this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
         model.data.forEach((entity: ModelEntity) => {
-            this._context.fillStyle = "white"; // Set fill color
-            this._context.fillRect(entity.position.x, entity.position.y, 10, 10); // Draw 10x10 rectangle
-
+            if(entity satisfies Drawable) {
+                entity.draw(this._context);
+            }
             console.log(`Entity at position: (${entity.position.x}, ${entity.position.y})`);
         });
     }
 }
 
-export {View, ViewCanvas};
+export {View, ViewCanvas, Drawable};
