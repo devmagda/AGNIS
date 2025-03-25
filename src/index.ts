@@ -3,9 +3,10 @@ import { Vector2D } from "./modules/math/vectors/Vectors";
 import Controller from "./modules/mvc/Controller";
 import { ButtonIds } from "./constants";
 import Game from "./Game";
+import {View, ViewCanvas} from "./modules/mvc/View";
 
 const game = new Game();
-const controller = Controller.defaultConfig(game.canvas);
+const controller = Controller.defaultConfig(new ViewCanvas(game.canvas));
 
 let isPlaying = false;
 let lastFrameTime = 0;
