@@ -1,13 +1,26 @@
 import {Model, ModelEntity} from "./Model";
 
-export default class View {
+class View {
+    _lastModel: Model;
+    constructor() {
+        this._lastModel = Model.empty();
+    }
+
+    update(model: Model) {
+        model.data.forEach((entity: ModelEntity) => {
+            console.log(`Entity at position: (${entity.position.x}, ${entity.position.y})`);
+        });
+    }
+}
+
+class ViewCanvas extends View {
     _canvas: HTMLCanvasElement;
     _context: CanvasRenderingContext2D;
-    _lastModel: Model;
 
     canvasSize = 1000;
 
     constructor(canvas: HTMLCanvasElement) {
+        super();
         this._canvas = canvas;
         this._canvas.width = this.canvasSize;
         this._canvas.height = this.canvasSize;
@@ -18,7 +31,6 @@ export default class View {
             console.error('Canvas: ', canvas);
             throw new Error("Context not found in canvas.");
         }
-        this._lastModel = Model.empty();
     }
 
     update(model: Model): void {
@@ -34,5 +46,6 @@ export default class View {
             console.log(`Entity at position: (${entity.position.x}, ${entity.position.y})`);
         });
     }
-
 }
+
+export {View, ViewCanvas};

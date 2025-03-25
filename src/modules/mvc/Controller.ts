@@ -1,14 +1,14 @@
 import { Vector2D } from "../math/vectors/Vectors";
 import {Model, ModelEntity} from "./Model";
-import View from "./View";
+import {View} from "./View";
 
 export default class Controller {
     _model: Model;
     _view: View;
 
-    constructor(canvas: HTMLCanvasElement) {
+    constructor(view: View) {
         this._model = Model.empty();
-        this._view = new View(canvas);
+        this._view = view;
     }
 
     set model(model: Model) {
@@ -35,8 +35,8 @@ export default class Controller {
         this._view.update(this._model);
     }
 
-    static defaultConfig(canvas: HTMLCanvasElement): Controller {
-        const defaultController = new Controller(canvas);
+    static defaultConfig(view: View): Controller {
+        const defaultController = new Controller(view);
         defaultController.model = Model.defaultConfig();
         defaultController.view.update(defaultController.model);
         return defaultController;
