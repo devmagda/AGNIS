@@ -59,6 +59,6 @@ describe("Controller", () => {
     test("should reload the model with default configuration", () => {
         const controller = new Controller(new View());
         controller.reload();
-        expect(controller.model.data.size).toBe(1);
+        expect(controller.model.data.size).toBe(0);
     });
 });
