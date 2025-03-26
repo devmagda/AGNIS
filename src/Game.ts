@@ -23,6 +23,10 @@ export default class Game {
         return this._getButton(ButtonIds.ControllerPlay);
     }
 
+    get buttonSpawn(): HTMLButtonElement {
+        return this._getButton(ButtonIds.ControllerSpawn);
+    }
+
      get buttonPause(): HTMLButtonElement {
         return this._getButton(ButtonIds.ControllerPause);
     }

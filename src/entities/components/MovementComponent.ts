@@ -5,12 +5,14 @@ export default class MovementComponent {
     _location: Vector2D;
     _velocity: Vector2D;
     _orientation: Vector2D; // This is a normalized value (velocity) to not lose the rotation when velocity = (0, 0)
+    _acceleration: Vector2D;
     _maxSpeed: number;
 
     constructor(location: Vector2D, maxSpeed: number) {
         this._location = location;
         this._velocity = VectorUtil.zero();
-        this._orientation = VectorUtil.zero();
+        this._orientation = VectorUtil.north();
+        this._acceleration = VectorUtil.zero();
         this._maxSpeed = maxSpeed;
     }
 
@@ -60,4 +62,19 @@ export default class MovementComponent {
         }
     }
 
+    applyForce(force: Vector2D): void {
+        this._acceleration = VectorUtil.add(this._acceleration, force);
+    }
+
+    update(): void {
+        this._velocity = VectorUtil.add(this._velocity, this._acceleration);
+        this._velocity.limit = this._maxSpeed;
+        this._location = VectorUtil.add(this._location, this._velocity);
+
+        this._resetAcceleration();
+    }
+
+    _resetAcceleration() {
+        this._acceleration = VectorUtil.zero();
+    }
 }

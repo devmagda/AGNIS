@@ -65,4 +65,12 @@ export default class Vector2D {
     normalize(): void {
         this.limit = 1;  // Normalizing by limiting the vector's magnitude to 1
     }
+
+    add(other: Vector2D): void {
+        this._position = math.add(this._position, other.position);
+    }
+
+    subtract(other: Vector2D): void {
+        this.add(new Vector2D(-other.x, -other.y));
+    }
 }

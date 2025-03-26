@@ -28,7 +28,7 @@ export default class Controller {
     }
 
     reload(): void {
-        this._model = Model.defaultConfig();
+        this._model.clear();
         this._view.update(this._model);
     }
 
@@ -37,5 +37,9 @@ export default class Controller {
         defaultController.model = Model.defaultConfig();
         defaultController.view.update(defaultController.model);
         return defaultController;
+    }
+
+    updateRender(): void {
+        this._view.update(this._model);
     }
 }

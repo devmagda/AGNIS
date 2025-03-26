@@ -3,6 +3,7 @@ import Vector2D from "./Vector2D";
 import {ViewCanvas} from "../../mvc/View";
 
 export default class VectorUtil {
+    static ZERO_VECTOR = new Vector2D(0, 0);
     static add(a: Vector2D, b: Vector2D): Vector2D {
         const resultPosition = math.add(a.position, b.position);
         return new Vector2D(resultPosition.get([0]), resultPosition.get([1]));
@@ -24,7 +25,23 @@ export default class VectorUtil {
     }
 
     static zero(): Vector2D {
-        return new Vector2D(0, 0);
+        return VectorUtil.ZERO_VECTOR;
+    }
+
+    static north(): Vector2D {
+        return new Vector2D(0, -1);
+    }
+
+    static east(): Vector2D {
+        return new Vector2D(1, 0);
+    }
+
+    static south(): Vector2D {
+        return new Vector2D(0, 1);
+    }
+
+    static west(): Vector2D {
+        return new Vector2D(-1, 0);
     }
 
     static canvasSize() {

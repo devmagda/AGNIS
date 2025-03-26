@@ -23,6 +23,10 @@ class Model {
         this._data.set(entity.id, entity);
     }
 
+    clear() {
+        this._data = new Map();
+    }
+
     static defaultConfig() {
         const model = new Model();
         model.add(new ModelEntity(0));

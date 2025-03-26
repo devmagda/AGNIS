@@ -52,6 +52,22 @@ describe('Vector2D', () => {
         expect(vector.x).toBe(5);
         expect(vector.y).toBe(6);
     });
+
+    test('should add two vectors correctly', () => {
+        const vectorA = new Vector2D(1, 2);
+        const vectorB = new Vector2D(3, 4);
+        vectorA.add(vectorB);
+        expect(vectorA.x).toBe(4);  // 1 + 3
+        expect(vectorA.y).toBe(6);  // 2 + 4
+    });
+
+    test('should subtract two vectors correctly', () => {
+        const vectorA = new Vector2D(5, 6);
+        const vectorB = new Vector2D(3, 4);
+        vectorA.subtract(vectorB);
+        expect(vectorA.x).toBe(2);  // 5 - 3
+        expect(vectorA.y).toBe(2);  // 6 - 4
+    });
 });
 
 describe('VectorUtil', () => {

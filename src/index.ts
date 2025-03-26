@@ -13,7 +13,7 @@ controller.model.add(new Entity(1 ,VectorUtil.getRandom(VectorUtil.canvasSize())
 controller.model.add(new Entity(2 ,VectorUtil.getRandom(VectorUtil.canvasSize()), 10));
 controller.model.add(new Entity(3 ,VectorUtil.getRandom(VectorUtil.canvasSize()), 10));
 
-controller.view.update(controller.model);
+controller.updateRender();
 
 let isPlaying = false;
 let lastFrameTime = 0;
@@ -30,6 +30,8 @@ function gameLoop(timestamp: number) {
     requestAnimationFrame(gameLoop);
 }
 
+let spawnIdCounter = 42000;
+
 // Button Events
 game.buttonPlay.onclick = () => {
     if (!isPlaying) {
@@ -38,6 +40,11 @@ game.buttonPlay.onclick = () => {
         requestAnimationFrame(gameLoop);
     }
 };
+
+game.buttonSpawn.onclick = () => {
+    controller.model.add(new Entity(spawnIdCounter++, VectorUtil.getRandom(VectorUtil.canvasSize()), 10));
+    controller.updateRender();
+}
 
 game.buttonPause.onclick = () => {
     isPlaying = false; // Stops the loop
