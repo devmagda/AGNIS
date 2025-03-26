@@ -9,9 +9,9 @@ import VectorUtil from "./modules/math/vectors/VectorUtil";
 const game = new Game();
 const controller = new Controller(new ViewCanvas(game.canvas));
 
-controller.model.add(new Entity(1 ,VectorUtil.getRandom(VectorUtil.canvasSize()), 10));
-controller.model.add(new Entity(2 ,VectorUtil.getRandom(VectorUtil.canvasSize()), 10));
-controller.model.add(new Entity(3 ,VectorUtil.getRandom(VectorUtil.canvasSize()), 10));
+controller.model.add(new Entity(1 ,VectorUtil.getRandom(VectorUtil.canvasSize())));
+controller.model.add(new Entity(2 ,VectorUtil.getRandom(VectorUtil.canvasSize())));
+controller.model.add(new Entity(3 ,VectorUtil.getRandom(VectorUtil.canvasSize())));
 
 controller.updateRender();
 
@@ -42,7 +42,7 @@ game.buttonPlay.onclick = () => {
 };
 
 game.buttonSpawn.onclick = () => {
-    controller.model.add(new Entity(spawnIdCounter++, VectorUtil.getRandom(VectorUtil.canvasSize()), 10));
+    controller.model.add(new Entity(spawnIdCounter++, VectorUtil.getRandom(VectorUtil.canvasSize())));
     controller.updateRender();
 }
 

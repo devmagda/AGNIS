@@ -33,11 +33,13 @@
 
 /* General Reset */
 html, body {
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
     margin: 0;
     background-color: var(--bg-primary);
     color: var(--text-primary);
     font-family: 'Arial', sans-serif;
+    overflow: hidden;
 }
 
 /* Fullscreen Layout */
@@ -49,7 +51,6 @@ body {
 
 /* Navigation Bar */
 #navigation {
-    height: 5vh;
     display: flex;
     align-items: center;
     padding: 0 20px;
@@ -60,9 +61,10 @@ body {
 
 /* Main Content */
 #content {
+    flex: 1;
     display: flex;
-    height: 90vh;
-    flex-grow: 1;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 /* Game Canvas Section */
@@ -76,16 +78,14 @@ body {
 }
 
 #view {
-    width: 90vh;
-    height: 90vh;
-    background-color: #000;
+    background-color: var(--text-secondary);
     border: 3px solid var(--panel-border);
     border-radius: 8px;
 }
 
 /* Settings Panel (Right Side) */
 #settings {
-    width: 250px;
+    min-width: 20vw;
     background: var(--panel-bg);
     padding: 15px;
     border-radius: 10px;
@@ -103,12 +103,9 @@ h5 {
 
 /* Footer */
 #footer {
-    height: 5vh;
     display: flex;
     align-items: start;
     background-color: var(--bg-secondary);
-    border-top: 2px solid var(--border-color);
-    gap: 10px;
     padding: 5px;
     img {
         width: 20px;

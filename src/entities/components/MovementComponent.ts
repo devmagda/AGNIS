@@ -1,7 +1,7 @@
 import Vector2D from "../../modules/math/vectors/Vector2D";
 import VectorUtil from "../../modules/math/vectors/VectorUtil";
 
-export default class MovementComponent {
+class MovementComponent {
     _location: Vector2D;
     _velocity: Vector2D;
     _orientation: Vector2D; // This is a normalized value (velocity) to not lose the rotation when velocity = (0, 0)
@@ -38,6 +38,7 @@ export default class MovementComponent {
 
     set velocity(value: Vector2D) {
         this._velocity = value;
+        console.log('aua');
         if (!VectorUtil.equals(value, VectorUtil.zero())) {
             this._orientation = VectorUtil.normalize(value);
         }
@@ -78,3 +79,5 @@ export default class MovementComponent {
         this._acceleration = VectorUtil.zero();
     }
 }
+
+export {MovementComponent};
