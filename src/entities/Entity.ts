@@ -21,7 +21,7 @@ export default class Entity extends ModelEntity implements Drawable {
     draw(ctx: CanvasRenderingContext2D): void {
         const radius = 30;
         if(this._movementComponent instanceof WrappedMovementComponent) {
-            this._movementComponent.getWrappedPositions().forEach((position: Vector2D) => {
+            this._movementComponent.getWrappedPositions(radius).forEach((position: Vector2D) => {
                 EntityRenderer.drawEntity(ctx, position, this._movementComponent.orientation, radius);
             });
         } else {

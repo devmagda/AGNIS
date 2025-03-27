@@ -1,4 +1,5 @@
 import * as math from 'mathjs';
+import VectorUtil from "./VectorUtil";
 
 export default class Vector2D {
     private _position: math.Matrix;
@@ -48,6 +49,10 @@ export default class Vector2D {
         return this._position.get([1]);
     }
 
+    toString(): string {
+        return `Vector2D(${this.x}, ${this.y})`;
+    }
+
     set x(value: number) {
         this._position.set([0], value);
     }
@@ -73,4 +78,10 @@ export default class Vector2D {
     subtract(other: Vector2D): void {
         this.add(new Vector2D(-other.x, -other.y));
     }
+
+    equals(other: Vector2D): boolean {
+        const epsilon = 0.00001;
+        return Math.abs(this.x - other.x) < epsilon && Math.abs(this.y - other.y) < epsilon;
+    }
+
 }

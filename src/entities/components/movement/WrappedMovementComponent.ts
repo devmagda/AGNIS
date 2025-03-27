@@ -24,7 +24,7 @@ class WrappedMovementComponent extends BorderedMovementComponent {
         this._resetAcceleration();
     }
 
-    getWrappedPositions(): Vector2D[] {
+    getWrappedPositions(radius: number): Vector2D[] {
         const { x, y } = this._location;
         const { x: minX, y: minY } = this._a;
         const { x: maxX, y: maxY } = this._b;
@@ -32,16 +32,16 @@ class WrappedMovementComponent extends BorderedMovementComponent {
         let positions = [new Vector2D(x, y)];
 
         // Wrap positions when near edges
-        if (x - 30 < minX) positions.push(new Vector2D(x + (maxX - minX), y));
-        if (x + 30 > maxX) positions.push(new Vector2D(x - (maxX - minX), y));
-        if (y - 30 < minY) positions.push(new Vector2D(x, y + (maxY - minY)));
-        if (y + 30 > maxY) positions.push(new Vector2D(x, y - (maxY - minY)));
+        if (x - radius < minX) positions.push(new Vector2D(x + (maxX - minX), y));
+        if (x + radius > maxX) positions.push(new Vector2D(x - (maxX - minX), y));
+        if (y - radius < minY) positions.push(new Vector2D(x, y + (maxY - minY)));
+        if (y + radius > maxY) positions.push(new Vector2D(x, y - (maxY - minY)));
 
         // Corner cases (both X and Y wrapping)
-        if (x - 30 < minX && y - 30 < minY) positions.push(new Vector2D(x + (maxX - minX), y + (maxY - minY)));
-        if (x + 30 > maxX && y - 30 < minY) positions.push(new Vector2D(x - (maxX - minX), y + (maxY - minY)));
-        if (x - 30 < minX && y + 30 > maxY) positions.push(new Vector2D(x + (maxX - minX), y - (maxY - minY)));
-        if (x + 30 > maxX && y + 30 > maxY) positions.push(new Vector2D(x - (maxX - minX), y - (maxY - minY)));
+        if (x - radius < minX && y - radius < minY) positions.push(new Vector2D(x + (maxX - minX), y + (maxY - minY)));
+        if (x + radius > maxX && y - radius < minY) positions.push(new Vector2D(x - (maxX - minX), y + (maxY - minY)));
+        if (x - radius < minX && y + radius > maxY) positions.push(new Vector2D(x + (maxX - minX), y - (maxY - minY)));
+        if (x + radius > maxX && y + radius > maxY) positions.push(new Vector2D(x - (maxX - minX), y - (maxY - minY)));
 
         return positions;
     }
