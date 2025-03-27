@@ -2,7 +2,7 @@ import Vector2D from "../modules/math/vectors/Vector2D";
 import {Drawable} from "../modules/mvc/View";
 import {ModelEntity} from "../modules/mvc/Model";
 import {Colors} from "../constants";
-import BehaviourComponent from "../modules/behaviors/BehaviourComponent";
+import BehaviourComponent from "./components/BehaviourComponent";
 import {MovementComponent} from "./components/MovementComponent";
 
 export default class Entity extends ModelEntity implements Drawable {

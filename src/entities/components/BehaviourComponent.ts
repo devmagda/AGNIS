@@ -1,9 +1,9 @@
-import BehaviorManager from "./BehaviourManager";
-import Vector2D from "../math/vectors/Vector2D";
-import Entity from "../../entities/Entity";
-import SeekTarget from "./steering/SeekTarget";
-import Behaviour from "./Behaviour";
-import Wander from "./steering/Wander";
+import BehaviorManager from "../../modules/behaviors/BehaviourManager";
+import Vector2D from "../../modules/math/vectors/Vector2D";
+import Entity from "../Entity";
+import SeekTarget from "../../modules/behaviors/steering/SeekTarget";
+import Behaviour from "../../modules/behaviors/Behaviour";
+import Wander from "../../modules/behaviors/steering/Wander";
 
 class BehaviorComponent {
     private _currentBehavior: Behaviour;
