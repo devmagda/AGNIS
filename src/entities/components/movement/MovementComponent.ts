@@ -1,5 +1,5 @@
-import Vector2D from "../../modules/math/vectors/Vector2D";
-import VectorUtil from "../../modules/math/vectors/VectorUtil";
+import Vector2D from "../../../modules/math/vectors/Vector2D";
+import VectorUtil from "../../../modules/math/vectors/VectorUtil";
 
 class MovementComponent {
     _location: Vector2D;
@@ -38,7 +38,6 @@ class MovementComponent {
 
     set velocity(value: Vector2D) {
         this._velocity = value;
-        console.log('aua');
         if (!VectorUtil.equals(value, VectorUtil.zero())) {
             this._orientation = VectorUtil.normalize(value);
         }
