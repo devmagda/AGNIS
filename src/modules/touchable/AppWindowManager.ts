@@ -1,5 +1,5 @@
 import {AppWindow} from "./AppWindow";
-
+import "./styles/themes/default.css";
 class AppWindowManager {
     _windows: AppWindow[];
 

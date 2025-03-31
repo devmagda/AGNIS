@@ -6,7 +6,7 @@ import {AppWindowUtil} from "../AppWindowUtil";
 
 class ControllerWindow extends ButtonWindow {
     constructor(game: Game) {
-        super(ControllerWindow.getButtons(game));
+        super(ControllerWindow.getButtons(game), ["controller-window"]);
     }
 
     static getButtons(game: Game) {
