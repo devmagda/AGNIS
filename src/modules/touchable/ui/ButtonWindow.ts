@@ -9,9 +9,7 @@ class ButtonWindow extends AppWindow {
             this._contentDiv.appendChild(button);
         });
     }
-
     protected _setContent(contentDiv: HTMLDivElement): void {
-
     }
 }
 

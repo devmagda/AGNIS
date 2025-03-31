@@ -65,8 +65,13 @@ class AppWindow {
     }
 
     private _toggleMinimize(): void {
-        this._contentDiv.style.display = this._contentDiv.style.display === "none" ? "block" : "none";
-    }
+        const hiddenClassName = "hide";
+
+        if(this._contentDiv.classList.contains(hiddenClassName)) {
+            this._contentDiv.classList.remove(hiddenClassName);
+        } else {
+            this._contentDiv.classList.add(hiddenClassName);
+        }}
 
     private _closeWindow(): void {
         this._windowDiv.remove();
