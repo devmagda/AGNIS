@@ -1,24 +1,25 @@
 import Vector2D from "../../../modules/math/vectors/Vector2D";
 import VectorUtil from "../../../modules/math/vectors/VectorUtil";
 import { BorderedMovementComponent } from "./BorderedMovementComponent";
+import {ScreenMovementComponent} from "./ScreenMovementComponent";
 
-class WrappedMovementComponent extends BorderedMovementComponent {
+class WrappedMovementComponent extends ScreenMovementComponent {
     update(): void {
         this._velocity = VectorUtil.add(this._velocity, this._acceleration);
         this._velocity.limit = this._maxSpeed;
         this._location = VectorUtil.add(this._location, this._velocity);
 
         // Wrap around when out of bounds
-        if (this._location.x < this._a.x) {
-            this._location.x = this._b.x;
-        } else if (this._location.x > this._b.x) {
-            this._location.x = this._a.x;
+        if (this._location.x < this.a.x) {
+            this._location.x = this.b.x;
+        } else if (this._location.x > this.b.x) {
+            this._location.x = this.a.x;
         }
 
-        if (this._location.y < this._a.y) {
-            this._location.y = this._b.y;
-        } else if (this._location.y > this._b.y) {
-            this._location.y = this._a.y;
+        if (this._location.y < this.a.y) {
+            this._location.y = this.b.y;
+        } else if (this._location.y > this.b.y) {
+            this._location.y = this.a.y;
         }
 
         this._resetAcceleration();
@@ -26,8 +27,8 @@ class WrappedMovementComponent extends BorderedMovementComponent {
 
     getWrappedPositions(radius: number): Vector2D[] {
         const { x, y } = this._location;
-        const { x: minX, y: minY } = this._a;
-        const { x: maxX, y: maxY } = this._b;
+        const { x: minX, y: minY } = this.a;
+        const { x: maxX, y: maxY } = this.b;
 
         let positions = [new Vector2D(x, y)];
 

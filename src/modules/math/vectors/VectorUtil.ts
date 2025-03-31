@@ -45,7 +45,7 @@ export default class VectorUtil {
     }
 
     static canvasSize() {
-        return new Vector2D(ViewCanvas.canvasSize, ViewCanvas.canvasSize);
+        return new Vector2D(window.innerWidth, window.innerHeight);
     }
 
     static equals(a: Vector2D, b: Vector2D): boolean {

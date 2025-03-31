@@ -12,14 +12,22 @@ class BorderedMovementComponent extends MovementComponent {
         this._b = b;
     }
 
+    get a(): Vector2D {
+        return this._a;
+    }
+
+    get b(): Vector2D {
+        return this._b;
+    }
+
     isOutOfBounds() {
         const x = this._location.x;
         const y = this._location.y;
 
-        const ax = this._a.x;
-        const ay = this._a.y;
-        const bx = this._b.x;
-        const by = this._b.y;
+        const ax = this.a.x;
+        const ay = this.a.y;
+        const bx = this.b.x;
+        const by = this.b.y;
 
         return x > bx || x < ax || y > by || y < ay;
     }

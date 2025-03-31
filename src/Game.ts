@@ -1,51 +1,60 @@
-import {ButtonIds, CanvasId, DivIds} from "./constants";
+import {AppWindowManager} from "./modules/touchable/AppWindowManager";
+import Controller from "./modules/mvc/Controller";
+import {ViewCanvas} from "./modules/mvc/View";
+import {ControllerWindow} from "./modules/touchable/ui/ControllerWindow";
+import {AppWindowUtil} from "./modules/touchable/AppWindowUtil";
 
 export default class Game {
-    private  _getButton(buttonId: string): HTMLButtonElement {
-        const button: HTMLButtonElement | null = document.querySelector<HTMLButtonElement>("#" + buttonId);
-        if(button) {
-            return button;
-        } else {
-            throw new Error("Can't find a required button with id " + buttonId);
-        }
+    lastId = 0;
+    _windowManager: AppWindowManager;
+    _controller: Controller;
+    _isPlaying = false;
+    _lastFrameTime = 0;
+    constructor() {
+        const canvas = AppWindowUtil.createGameCanvas('game_canvas', window.innerWidth, window.innerHeight);
+        document.body.appendChild(canvas);
+
+        this._controller = new Controller(new ViewCanvas(canvas));
+        this._windowManager = new AppWindowManager();
+        this._windowManager.addWindow(new ControllerWindow(this));
+
     }
 
-    get game(): HTMLDivElement {
-        const game: HTMLDivElement | null = document.querySelector<HTMLDivElement>("#" + DivIds.Game);
-        if(game) {
-            return game;
-        } else {
-            throw new Error("Can't find a required div with id " + DivIds.Game);
-        }
+    gameLoop(timestamp: number) {
+        if (!this._isPlaying) return; // Pause the loop if not playing
+
+        const deltaTime = timestamp - this._lastFrameTime;
+        this._lastFrameTime = timestamp;
+
+        this._controller.update(); // Update game state
+
+        requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
     }
 
-     get buttonPlay(): HTMLButtonElement {
-        return this._getButton(ButtonIds.ControllerPlay);
+    get controller() {
+        return this._controller;
     }
 
-    get buttonSpawn(): HTMLButtonElement {
-        return this._getButton(ButtonIds.ControllerSpawn);
+    get windowManager() {
+        return this._windowManager;
     }
 
-     get buttonPause(): HTMLButtonElement {
-        return this._getButton(ButtonIds.ControllerPause);
+    get isPlaying() {
+        return this._isPlaying;
     }
 
-     get buttonNext(): HTMLButtonElement {
-        return this._getButton(ButtonIds.ControllerNext);
+    set isPlaying(isPlaying: boolean) {
+        this._isPlaying = isPlaying;
     }
 
-     get buttonReload(): HTMLButtonElement {
-        return this._getButton(ButtonIds.ControllerReload);
+    start() {
+        this._isPlaying = true;
+        this._lastFrameTime = performance.now();
+        requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
     }
 
-     get canvas(): HTMLCanvasElement {
-        const canvas: HTMLCanvasElement | null = document.querySelector<HTMLCanvasElement>("#" + CanvasId);
-        if(canvas) {
-            return canvas;
-        } else {
-            throw new Error("there was an error trying to get the canvas element with id<" + CanvasId + ">. This is required to display the View!");
-        }
+    stop() {
+        this._isPlaying = false;
     }
 }
 

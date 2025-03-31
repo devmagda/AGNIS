@@ -13,6 +13,12 @@ class View {
     update(model: Model) {
         this._lastModel = model;
     }
+
+    redrawOnResize(): void {
+        window.addEventListener('resize', () => {
+            this.update(this._lastModel);
+        });
+    }
 }
 
 class ViewCanvas extends View {
@@ -24,8 +30,6 @@ class ViewCanvas extends View {
     constructor(canvas: HTMLCanvasElement) {
         super();
         this._canvas = canvas;
-        this._canvas.width = ViewCanvas.canvasSize;
-        this._canvas.height = ViewCanvas.canvasSize;
         const context = canvas.getContext("2d");
         if (context) {
             this._context = context;
@@ -33,6 +37,7 @@ class ViewCanvas extends View {
             console.error('Canvas: ', canvas);
             throw new Error("Context not found in canvas.");
         }
+        this.redrawOnResize();
     }
 
     update(model: Model): void {
