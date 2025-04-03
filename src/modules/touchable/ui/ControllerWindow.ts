@@ -31,6 +31,22 @@ class ControllerWindow extends ButtonWindow {
 
         return [playButton, pauseButton, nextButton, reloadButton, spawnButton];
     }
+
+    protected _createHeaderDiv(title: string): HTMLDivElement {
+        const classList = [
+            "app-window",
+            "header"
+        ];
+        const headerDiv = AppWindowUtil.createDiv(`header_${this._id}`, {}, classList);
+
+        const titleElement = AppWindowUtil.createTitle(title, "p", {});
+        const minimizeButton = AppWindowUtil.createButton("_", () => this._toggleMinimize());
+
+        headerDiv.appendChild(titleElement);
+        headerDiv.appendChild(minimizeButton);
+
+        return headerDiv;
+    }
 }
 
 export {ControllerWindow};

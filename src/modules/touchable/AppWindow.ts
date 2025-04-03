@@ -32,7 +32,7 @@ class AppWindow {
         return AppWindowUtil.createDiv(`window_${this._id}`, {}, classList);
     }
 
-    private _createHeaderDiv(title: string): HTMLDivElement {
+    protected _createHeaderDiv(title: string): HTMLDivElement {
         const classList = [
             "app-window",
             "header"
@@ -64,7 +64,7 @@ class AppWindow {
         contentDiv.textContent = "Inner content goes here...";
     }
 
-    private _toggleMinimize(): void {
+    protected _toggleMinimize(): void {
         const hiddenClassName = "hide";
 
         if(this._contentDiv.classList.contains(hiddenClassName)) {
