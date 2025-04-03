@@ -1,5 +1,4 @@
 import {AppWindow} from "../AppWindow";
-import Controller from "../../mvc/Controller";
 import {AppWindowUtil} from "../AppWindowUtil";
 
 class ButtonWindow extends AppWindow {

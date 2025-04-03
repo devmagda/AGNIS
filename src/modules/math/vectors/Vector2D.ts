@@ -1,5 +1,4 @@
 import * as math from 'mathjs';
-import VectorUtil from "./VectorUtil";
 
 export default class Vector2D {
     private _position: math.Matrix;

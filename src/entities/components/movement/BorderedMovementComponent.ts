@@ -1,6 +1,5 @@
 import Vector2D from "../../../modules/math/vectors/Vector2D";
-import VectorUtil from "../../../modules/math/vectors/VectorUtil";
-import { MovementComponent } from "./MovementComponent";
+import {MovementComponent} from "./MovementComponent";
 
 class BorderedMovementComponent extends MovementComponent {
     _a: Vector2D; // Upper-left corner

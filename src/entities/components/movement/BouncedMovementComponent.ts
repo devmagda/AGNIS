@@ -1,6 +1,4 @@
-import Vector2D from "../../../modules/math/vectors/Vector2D";
 import VectorUtil from "../../../modules/math/vectors/VectorUtil";
-import { BorderedMovementComponent } from "./BorderedMovementComponent";
 import {ScreenMovementComponent} from "./ScreenMovementComponent";
 
 class BouncedMovementComponent extends ScreenMovementComponent {

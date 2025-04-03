@@ -1,6 +1,5 @@
 import * as math from "mathjs";
 import Vector2D from "./Vector2D";
-import {ViewCanvas} from "../../mvc/View";
 
 export default class VectorUtil {
     static ZERO_VECTOR = new Vector2D(0, 0);

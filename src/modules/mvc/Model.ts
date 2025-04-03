@@ -1,5 +1,4 @@
 import {Drawable} from "./View";
-import Vector2D from "../math/vectors/Vector2D";
 
 class Model {
     _data: Map<number, ModelEntity>;
