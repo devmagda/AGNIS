@@ -48,6 +48,14 @@ class AppWindowUtil {
         });
         return canvas;
     }
+
+    static createButtonContainer(id: string, buttons: HTMLButtonElement[], styles: Partial<CSSStyleDeclaration> = {}) {
+        const buttonContainerDiv = AppWindowUtil.createDiv(id);
+        buttons.forEach((button: HTMLButtonElement) => {
+            buttonContainerDiv.appendChild(button);
+        });
+        return buttonContainerDiv;
+    }
 }
 
 export { AppWindowUtil };

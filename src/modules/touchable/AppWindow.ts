@@ -1,7 +1,7 @@
 import {AppWindowUtil} from "./AppWindowUtil";
 
 class AppWindow {
-    private _id: string;
+    protected _id: string;
     private _width: number;
     private _height: number;
     private _windowDiv: HTMLDivElement;
