@@ -49,6 +49,7 @@ class InputManager {
     private initializeListeners() {
         document.addEventListener("keydown", (event: KeyboardEvent) => {
             const key = event.key.toLowerCase();
+            console.log("keydown: ", key);
             if (this._keyDownBinds.has(key)) {
                 event.preventDefault();
                 this._keyDownBinds.get(key)!(event);
@@ -57,6 +58,7 @@ class InputManager {
 
         document.addEventListener("keyup", (event: KeyboardEvent) => {
             const key = event.key.toLowerCase();
+            console.log("keyup: ", key);
             if (this._keyUpBinds.has(key)) {
                 this._keyUpBinds.get(key)!(event);
             }
@@ -66,6 +68,15 @@ class InputManager {
             this._mousePosition.x = event.clientX;
             this._mousePosition.y = event.clientY;
         });
+
+        const canvas= document.querySelector("canvas#game_canvas");
+        if(canvas) {
+            canvas.addEventListener("click", (event: Event) => {console.log("MouseEvent click: ", event)});
+            document.addEventListener("contextmenu", (event: Event) => {event.preventDefault(); console.log("MouseEvent contextmenu: ", event)});
+        } else {
+            console.error("Could not find canvas while trying to setup the InputManager!", this);
+            throw new Error("Could not find canvas while trying to setup the InputManager!");
+        }
     }
 
     private setupModifiers() {

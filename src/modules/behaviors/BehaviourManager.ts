@@ -1,11 +1,13 @@
 import Behaviour from "./Behaviour";
 import {SeekMouse} from "./steering/SeekMouse";
+import Wander from "./steering/Wander";
 
 class BehaviorManager {
     _behaviors: Behaviour[] = [];
 
     constructor() {
         this._behaviors.push(new SeekMouse());
+        this._behaviors.push(new Wander());
     }
 
     // Add a new behavior to the list of available behaviors

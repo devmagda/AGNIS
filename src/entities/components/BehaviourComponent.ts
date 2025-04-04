@@ -13,7 +13,7 @@ class BehaviorComponent {
 
     constructor() {
         this._behaviorManager = new BehaviorManager(); // Initialize the BehaviorManager
-        this._currentBehavior = this._behaviorManager.getBehavior('SeekMouse') || new Wander(); // Default to Wander
+        this._currentBehavior = this._behaviorManager.getBehavior('Wander') || new Wander(); // Default to Wander
         this._target = new Vector2D(0, 0); // Default target location
     }
 

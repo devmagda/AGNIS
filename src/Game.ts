@@ -20,7 +20,7 @@ export default class Game {
         this._windowManager = new AppWindowManager();
         this._windowManager.addWindow(new ControllerWindow(this));
 
-        this._inputManager = new InputManager();
+        this._inputManager = InputManager.instance;
 
     }
 
