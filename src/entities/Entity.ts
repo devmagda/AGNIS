@@ -26,6 +26,10 @@ export default class Entity extends ModelEntity implements Drawable {
         }
     }
 
+    get behaviourComponent() {
+        return this._behaviourComponent;
+    }
+
     get movementComponent() {
         return this._movementComponent;
     }

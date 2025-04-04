@@ -4,7 +4,7 @@ import Entity from "../../../entities/Entity";
 import VectorUtil from "../../math/vectors/VectorUtil";
 
 class SeekTarget implements Behaviour {
-    private _target: Vector2D;
+    protected _target: Vector2D;
 
     constructor(target: Vector2D) {
         this._target = target;

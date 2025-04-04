@@ -24,7 +24,7 @@ export default class VectorUtil {
     }
 
     static zero(): Vector2D {
-        return VectorUtil.ZERO_VECTOR;
+        return new Vector2D(0, 0);
     }
 
     static north(): Vector2D {

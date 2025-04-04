@@ -1,4 +1,5 @@
 import BehaviorManager from "../../modules/behaviors/BehaviourManager";
+import BehaviourManager from "../../modules/behaviors/BehaviourManager";
 import Vector2D from "../../modules/math/vectors/Vector2D";
 import Entity from "../Entity";
 import SeekTarget from "../../modules/behaviors/steering/SeekTarget";
@@ -12,7 +13,7 @@ class BehaviorComponent {
 
     constructor() {
         this._behaviorManager = new BehaviorManager(); // Initialize the BehaviorManager
-        this._currentBehavior = this._behaviorManager.getBehavior('Wander') || new Wander(); // Default to Wander
+        this._currentBehavior = this._behaviorManager.getBehavior('SeekMouse') || new Wander(); // Default to Wander
         this._target = new Vector2D(0, 0); // Default target location
     }
 
@@ -21,6 +22,10 @@ class BehaviorComponent {
         if (this._currentBehavior) {
             this._currentBehavior.apply(entity);
         }
+    }
+
+    get behaviorManager(): BehaviourManager {
+        return this._behaviorManager;
     }
 
     // Set the current behavior from the available list
