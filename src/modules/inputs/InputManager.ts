@@ -1,18 +1,17 @@
 import Vector2D from "../math/vectors/Vector2D";
 import VectorUtil from "../math/vectors/VectorUtil";
+import {EventBus} from "../eventbus/EventBus";
+import {EventNames} from "../eventbus/EventNames";
 
 class InputManager {
     private static _instance: InputManager | null = null;
 
-    private _keyDownBinds: Map<string, (event: KeyboardEvent) => void>;
-    private _keyUpBinds: Map<string, (event: KeyboardEvent) => void>;
     private _ctrlModifier: boolean = false;
+    private _shiftModifier: boolean = false;
     private _mousePosition: Vector2D = VectorUtil.zero();
+    private _inputBus = EventBus.getInstance();
 
     private constructor() {
-        this._keyDownBinds = new Map();
-        this._keyUpBinds = new Map();
-
         this.initializeListeners();
         this.setupModifiers();
     }
@@ -32,47 +31,76 @@ class InputManager {
         return this._ctrlModifier;
     }
 
-    addKeybind(
-        char: string,
-        keyDownFn: (event: KeyboardEvent) => void,
-        keyUpFn: (event: KeyboardEvent) => void = (event) => console.log(`${event.key} key released`)
-    ): void {
-        this._keyDownBinds.set(char.toLowerCase(), keyDownFn);
-        this._keyUpBinds.set(char.toLowerCase(), keyUpFn);
+    get shiftModifier() {
+        return this._shiftModifier;
     }
 
-    removeKeybind(char: string): void {
-        this._keyDownBinds.delete(char.toLowerCase());
-        this._keyUpBinds.delete(char.toLowerCase());
+    addKeydown(
+        keyCode: string,
+        keyFn: (event: KeyboardEvent) => void,
+    ): void {
+        const filteredFunction = (event: KeyboardEvent) => {
+        };
+
+        this._inputBus.on<KeyboardEvent>(EventNames.KeyDown + "-" + keyCode, keyFn);
+    }
+
+    addKeyup(
+        keyCode: string,
+        keyFn: (event: KeyboardEvent) => void,
+    ): void {
+        this._inputBus.on<KeyboardEvent>(EventNames.KeyUp + "-" + keyCode, keyFn);
+    }
+
+    addMousedown(
+        keyFn: (event: MouseEvent) => void,
+    ): void {
+        this._inputBus.on<MouseEvent>(EventNames.MouseDown, keyFn);
+    }
+
+    addMouseup(
+        keyFn: (event: MouseEvent) => void,
+    ): void {
+        this._inputBus.on<MouseEvent>(EventNames.MouseUp, keyFn);
     }
 
     private initializeListeners() {
+        this.initializeKeyListeners();
+        this.initializeMouseListeners();
+    }
+
+    private initializeKeyListeners() {
         document.addEventListener("keydown", (event: KeyboardEvent) => {
-            const key = event.key.toLowerCase();
-            console.log("keydown: ", key);
-            if (this._keyDownBinds.has(key)) {
-                event.preventDefault();
-                this._keyDownBinds.get(key)!(event);
-            }
+            this._inputBus.emit<KeyboardEvent>(EventNames.KeyDown + "-" + event.code, event);
         });
 
         document.addEventListener("keyup", (event: KeyboardEvent) => {
-            const key = event.key.toLowerCase();
-            console.log("keyup: ", key);
-            if (this._keyUpBinds.has(key)) {
-                this._keyUpBinds.get(key)!(event);
-            }
+            this._inputBus.emit<KeyboardEvent>(EventNames.KeyUp + "-" + event.code, event);
         });
+    }
 
-        document.addEventListener("mousemove", (event: MouseEvent) => {
-            this._mousePosition.x = event.clientX;
-            this._mousePosition.y = event.clientY;
-        });
+    private initializeMouseListeners() {
+        const canvas = document.querySelector("canvas#game_canvas") as HTMLCanvasElement;
+        if (canvas) {
+            window.addEventListener("mousemove", (event: MouseEvent) => {
+                if(this._ctrlModifier) {
+                    this._inputBus.emit<MouseEvent>(EventNames.MouseMoveCtrl, event);
+                }
+            });
 
-        const canvas= document.querySelector("canvas#game_canvas");
-        if(canvas) {
-            canvas.addEventListener("click", (event: Event) => {console.log("MouseEvent click: ", event)});
-            document.addEventListener("contextmenu", (event: Event) => {event.preventDefault(); console.log("MouseEvent contextmenu: ", event)});
+            this._inputBus.on<MouseEvent>(EventNames.MouseMoveCtrl, (event: MouseEvent) => {
+                this._mousePosition.x = event.clientX;
+                this._mousePosition.y = event.clientY;
+            });
+
+            canvas.addEventListener("click", (event: MouseEvent) => {
+                event.preventDefault();
+                this._inputBus.emit<MouseEvent>(EventNames.MouseClick, event);
+            });
+            document.addEventListener("contextmenu", (event: MouseEvent) => {
+                event.preventDefault();
+                this._inputBus.emit<MouseEvent>(EventNames.MouseContextMenu, event);
+            });
         } else {
             console.error("Could not find canvas while trying to setup the InputManager!", this);
             throw new Error("Could not find canvas while trying to setup the InputManager!");
@@ -80,15 +108,29 @@ class InputManager {
     }
 
     private setupModifiers() {
-        this.addKeybind("control",
-            (event: KeyboardEvent) => {
-                this._ctrlModifier = true;
-                console.log("this._ctrlModifier A", this._ctrlModifier);
-            },
-            () => {
+        this.addKeydown("ControlLeft", (event: KeyboardEvent) => {
+           if(!this._ctrlModifier) {
+               this._ctrlModifier = true;
+           }
+        });
+
+        this.addKeyup("ControlLeft", (event: KeyboardEvent) => {
+            if(this._ctrlModifier) {
                 this._ctrlModifier = false;
-                console.log("this._ctrlModifier B", this._ctrlModifier);
-            });
+            }
+        });
+
+        this.addKeydown("ShiftLeft", (event: KeyboardEvent) => {
+            if(!this._shiftModifier) {
+                this._shiftModifier = true;
+            }
+        });
+
+        this.addKeyup("ShiftLeft", (event: KeyboardEvent) => {
+            if(this._shiftModifier) {
+                this._shiftModifier = false;
+            }
+        });
     }
 }
 

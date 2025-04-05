@@ -9,7 +9,7 @@ import {EntityRenderer} from "../modules/drawing/EntityRenderer";
 export default class Entity extends ModelEntity implements Drawable {
     _movementComponent: MovementComponent;
     _behaviourComponent: BehaviourComponent;
-    constructor(id: number, spawnLocation: Vector2D, maxSpeed: number = 0.1 + Math.random() * 2) {
+    constructor(id: string, spawnLocation: Vector2D, maxSpeed: number = 0.1 + Math.random() * 2) {
         super(id);
         this._movementComponent = new WrappedMovementComponent(spawnLocation, maxSpeed);
         this._behaviourComponent = new BehaviourComponent();

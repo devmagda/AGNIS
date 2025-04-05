@@ -1,4 +1,5 @@
 import {AppWindowUtil} from "./AppWindowUtil";
+import {IDGen} from "../math/IdGen";
 
 class AppWindow {
     protected _id: string;
@@ -8,7 +9,7 @@ class AppWindow {
     protected _contentDiv: HTMLDivElement;
 
     constructor(title: string, width: number = 300, height: number = 200, x: number = 10, y: number = 10, contentDivClassNames: string[] = []) {
-        this._id = `win_${Math.random().toString(36).substr(2, 9)}`;
+        this._id = IDGen.getId("win");
         this._width = width;
         this._height = height;
         this._contentDiv = this._createContentDiv(contentDivClassNames);
@@ -29,7 +30,7 @@ class AppWindow {
         const classList = [
             "app-window",
         ];
-        return AppWindowUtil.createDiv(`window_${this._id}`, {}, classList);
+        return AppWindowUtil.createDiv(IDGen.getId("window"), {}, classList);
     }
 
     protected _createHeaderDiv(title: string): HTMLDivElement {
@@ -37,7 +38,7 @@ class AppWindow {
             "app-window",
             "header"
         ];
-        const headerDiv = AppWindowUtil.createDiv(`header_${this._id}`, {}, classList);
+        const headerDiv = AppWindowUtil.createDiv(IDGen.getId("header"), {}, classList);
 
         const titleElement = AppWindowUtil.createTitle(title, "p", {});
         const minimizeButton = AppWindowUtil.createButton("_", () => this._toggleMinimize());
@@ -54,7 +55,7 @@ class AppWindow {
         contentDivClassNames.push("app-window");
         contentDivClassNames.push("content");
 
-        const contentDiv = AppWindowUtil.createDiv(`content_${this._id}`, {}, contentDivClassNames);
+        const contentDiv = AppWindowUtil.createDiv(IDGen.getId("content"), {}, contentDivClassNames);
 
         this._setContent(contentDiv);
         return contentDiv;
