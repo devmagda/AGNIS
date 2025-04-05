@@ -1,16 +1,13 @@
-import SeekTarget from "./steering/SeekTarget";
-import Vector2D from "../math/vectors/Vector2D";
-import Wander from "./steering/Wander";
 import Behaviour from "./Behaviour";
+import {SeekMouse} from "./steering/SeekMouse";
+import Wander from "./steering/Wander";
 
 class BehaviorManager {
     _behaviors: Behaviour[] = [];
 
     constructor() {
-        // Initialize the list of available behaviors
+        this._behaviors.push(new SeekMouse());
         this._behaviors.push(new Wander());
-        // You can add more behaviors as required
-        this._behaviors.push(new SeekTarget(new Vector2D(0, 0))); // Default SeekTarget with placeholder
     }
 
     // Add a new behavior to the list of available behaviors

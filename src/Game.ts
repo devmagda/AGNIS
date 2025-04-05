@@ -3,6 +3,7 @@ import Controller from "./modules/mvc/Controller";
 import {ViewCanvas} from "./modules/mvc/View";
 import {ControllerWindow} from "./modules/touchable/ui/ControllerWindow";
 import {AppWindowUtil} from "./modules/touchable/AppWindowUtil";
+import {InputManager} from "./modules/inputs/InputManager";
 
 export default class Game {
     lastId = 0;
@@ -10,6 +11,7 @@ export default class Game {
     _controller: Controller;
     _isPlaying = false;
     _lastFrameTime = 0;
+    _inputManager: InputManager;
     constructor() {
         const canvas = AppWindowUtil.createGameCanvas('game_canvas', window.innerWidth, window.innerHeight);
         document.body.appendChild(canvas);
@@ -17,6 +19,8 @@ export default class Game {
         this._controller = new Controller(new ViewCanvas(canvas));
         this._windowManager = new AppWindowManager();
         this._windowManager.addWindow(new ControllerWindow(this));
+
+        this._inputManager = InputManager.instance;
 
     }
 

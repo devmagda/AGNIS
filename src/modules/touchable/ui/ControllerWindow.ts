@@ -3,6 +3,7 @@ import Game from "../../../Game";
 import Entity from "../../../entities/Entity";
 import VectorUtil from "../../math/vectors/VectorUtil";
 import {AppWindowUtil} from "../AppWindowUtil";
+import {IDGen} from "../../math/IdGen";
 
 class ControllerWindow extends ButtonWindow {
     constructor(game: Game) {
@@ -25,7 +26,7 @@ class ControllerWindow extends ButtonWindow {
         const spawnButton = AppWindowUtil.createButton("Spawn", () => {
             const model = game.controller.model;
             const view = game.controller.view;
-            model.add(new Entity(++game.lastId,  VectorUtil.getRandom(VectorUtil.canvasSize())));
+            model.add(new Entity(IDGen.getId("entity"),  VectorUtil.getRandom(VectorUtil.canvasSize())));
             view.update(model);
         });
 
@@ -37,7 +38,7 @@ class ControllerWindow extends ButtonWindow {
             "app-window",
             "header"
         ];
-        const headerDiv = AppWindowUtil.createDiv(`header_${this._id}`, {}, classList);
+        const headerDiv = AppWindowUtil.createDiv(IDGen.getId("header"), {}, classList);
 
         const titleElement = AppWindowUtil.createTitle(title, "p", {});
         const minimizeButton = AppWindowUtil.createButton("_", () => this._toggleMinimize());

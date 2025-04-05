@@ -1,7 +1,8 @@
 import {Drawable} from "./View";
+import {IDGen} from "../math/IdGen";
 
 class Model {
-    _data: Map<number, ModelEntity>;
+    _data: Map<string, ModelEntity>;
     constructor() {
         this._data = new Map();
     }
@@ -28,7 +29,7 @@ class Model {
 
     static defaultConfig() {
         const model = new Model();
-        model.add(new ModelEntity(0));
+        model.add(new ModelEntity(IDGen.getId("entity")));
         return model;
     }
 
@@ -38,8 +39,8 @@ class Model {
 }
 
 class ModelEntity implements Drawable {
-    _id: number;
-    constructor(id: number) {
+    _id: string;
+    constructor(id: string) {
         this._id = id;
     }
 
