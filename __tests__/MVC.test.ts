@@ -21,7 +21,7 @@ describe("Model", () => {
         const model = new Model();
         const entity = new ModelEntity("5");
         model.add(entity);
-        model.update();
+        model.update(1);
         expect(entity.id).toBe("5");
     });
 });
@@ -34,7 +34,7 @@ describe("ModelEntity", () => {
 
     test("should update position correctly", () => {
         const entity = new ModelEntity("5");
-        entity.update();
+        entity.update(1);
         expect(entity.id).toBe("5");
     });
 });
@@ -51,7 +51,7 @@ describe("Controller", () => {
         const model = new Model();
         model.add(new ModelEntity("0"));
         controller.model = model;
-        controller.update();
+        controller.update(1);
         // @ts-ignore
         expect(controller.model.data.get("0").id).toBe("0");
     });

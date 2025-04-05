@@ -30,7 +30,7 @@ describe('MovementComponent', () => {
     test('update correctly updates location and velocity', () => {
         const force = new Vector2D(1, 1);
         component.applyForce(force);
-        component.update();
+        component.update(1);
         expect(component.location).not.toEqual(new Vector2D(0, 0));
         expect(component.velocity).not.toEqual(VectorUtil.zero());
     });
