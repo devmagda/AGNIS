@@ -19,7 +19,6 @@ export default class Entity extends ModelEntity implements Drawable {
         const radius = 30;
         if(this._movementComponent instanceof WrappedMovementComponent) {
             this._movementComponent.getWrappedPositions(radius).forEach((position: Vector2D) => {
-                console.log(this._movementComponent.velocity);
                 EntityRenderer.drawEntity(ctx, position, this._movementComponent.orientation, radius);
             });
         } else {
