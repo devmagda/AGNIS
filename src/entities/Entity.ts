@@ -9,7 +9,7 @@ import {EntityRenderer} from "../modules/drawing/EntityRenderer";
 export default class Entity extends ModelEntity implements Drawable {
     _movementComponent: MovementComponent;
     _behaviourComponent: BehaviourComponent;
-    constructor(id: string, spawnLocation: Vector2D, maxSpeed: number = 0.1 + Math.random() * 2) {
+    constructor(id: string, spawnLocation: Vector2D, maxSpeed: number = 0.05 + Math.random() * 0.1) {
         super(id);
         this._movementComponent = new WrappedMovementComponent(spawnLocation, maxSpeed);
         this._behaviourComponent = new BehaviourComponent();
@@ -19,6 +19,7 @@ export default class Entity extends ModelEntity implements Drawable {
         const radius = 30;
         if(this._movementComponent instanceof WrappedMovementComponent) {
             this._movementComponent.getWrappedPositions(radius).forEach((position: Vector2D) => {
+                console.log(this._movementComponent.velocity);
                 EntityRenderer.drawEntity(ctx, position, this._movementComponent.orientation, radius);
             });
         } else {
@@ -34,8 +35,8 @@ export default class Entity extends ModelEntity implements Drawable {
         return this._movementComponent;
     }
 
-    update() {
+    update(deltaTime: number) {
         this._behaviourComponent.apply(this);
-        this._movementComponent.update();
+        this._movementComponent.update(deltaTime);
     }
 }

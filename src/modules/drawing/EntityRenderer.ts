@@ -30,7 +30,7 @@ class EntityRenderer {
 
         // Glow effect using radial gradient
         const gradient = ctx.createRadialGradient(position.x, position.y, 0, position.x, position.y, radius * 2);
-        gradient.addColorStop(0, "rgba(255,170,0,0.6)");
+        gradient.addColorStop(0, "rgba(255, 255, 0, 0.6)");
         gradient.addColorStop(1, "rgba(255, 255, 0, 0)");
 
         ctx.beginPath();

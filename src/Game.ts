@@ -30,7 +30,7 @@ export default class Game {
         const deltaTime = timestamp - this._lastFrameTime;
         this._lastFrameTime = timestamp;
 
-        this._controller.update(); // Update game state
+        this._controller.update(deltaTime); // Update game state
 
         requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
     }

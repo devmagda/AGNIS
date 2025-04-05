@@ -3,10 +3,15 @@ import VectorUtil from "../../../modules/math/vectors/VectorUtil";
 import {ScreenMovementComponent} from "./ScreenMovementComponent";
 
 class WrappedMovementComponent extends ScreenMovementComponent {
-    update(): void {
+    update(deltaTime: number): void {
+        // Apply acceleration to velocity
         this._velocity = VectorUtil.add(this._velocity, this._acceleration);
+
+        // Limit velocity by max speed
         this._velocity.limit = this._maxSpeed;
-        this._location = VectorUtil.add(this._location, this._velocity);
+
+        // Update location based on velocity and deltaTime
+        this._location = VectorUtil.add(this._location, VectorUtil.multiply(this._velocity, deltaTime));
 
         // Wrap around when out of bounds
         if (this._location.x < this.a.x) {

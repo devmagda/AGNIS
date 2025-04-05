@@ -4,7 +4,7 @@ import VectorUtil from "../../../modules/math/vectors/VectorUtil";
 class MovementComponent {
     _location: Vector2D;
     _velocity: Vector2D;
-    _orientation: Vector2D; // This is a normalized value (velocity) to not lose the rotation when velocity = (0, 0)
+    _orientation: Vector2D;
     _acceleration: Vector2D;
     _maxSpeed: number;
 
@@ -66,11 +66,18 @@ class MovementComponent {
         this._acceleration = VectorUtil.add(this._acceleration, force);
     }
 
-    update(): void {
+    // Update with deltaTime to ensure movement is smooth across frame rates
+    update(deltaTime: number): void {
+        // Scale the velocity by deltaTime
         this._velocity = VectorUtil.add(this._velocity, this._acceleration);
-        this._velocity.limit = this._maxSpeed;
-        this._location = VectorUtil.add(this._location, this._velocity);
 
+        // Limit the velocity according to maxSpeed
+        this._velocity.limit = this._maxSpeed;
+
+        // Apply deltaTime to the location update to ensure consistent movement
+        this._location = VectorUtil.add(this._location, VectorUtil.multiply(this._velocity, deltaTime));
+
+        // Reset acceleration
         this._resetAcceleration();
     }
 

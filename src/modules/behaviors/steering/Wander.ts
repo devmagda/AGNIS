@@ -16,7 +16,7 @@ class Wander implements Behaviour {
     }
 
     apply(entity: Entity): void {
-        const factor = 0.05;
+        const factor = Math.random() * 0.01;
         const doubledFactor = factor + factor;
 
         const movementComponent = entity.movementComponent;

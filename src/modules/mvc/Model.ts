@@ -15,8 +15,8 @@ class Model {
         return this._data;
     }
 
-    update(): void {
-        this._data.forEach(e => e.update());
+    update(deltaTime: number): void {
+        this._data.forEach(e => e.update(deltaTime));
     }
 
     add(entity: ModelEntity): void {
@@ -54,8 +54,8 @@ class ModelEntity implements Drawable {
         return this._id;
     }
 
-    update() {
-        console.warn('No update function implemented', this);
+    update(deltaTime: number) {
+        console.warn('No update function implemented', this, deltaTime);
     }
 }
 

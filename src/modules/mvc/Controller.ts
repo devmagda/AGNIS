@@ -33,8 +33,8 @@ export default class Controller {
         return this._view;
     }
 
-    update(): void {
-        this._model.update();
+    update(deltaTime: number): void {
+        this._model.update(deltaTime);
         this._view.update(this._model);
     }
 
