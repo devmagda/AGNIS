@@ -24,6 +24,27 @@ class EntityRenderer {
         ctx.stroke();
         ctx.closePath();
     }
+
+    static drawFood(ctx: CanvasRenderingContext2D, position: Vector2D, radius: number) {
+        const halfSize = radius;
+
+        // Glow effect using radial gradient
+        const gradient = ctx.createRadialGradient(position.x, position.y, 0, position.x, position.y, radius * 2);
+        gradient.addColorStop(0, "rgba(255,170,0,0.6)");
+        gradient.addColorStop(1, "rgba(255, 255, 0, 0)");
+
+        ctx.beginPath();
+        ctx.fillStyle = gradient;
+        ctx.arc(position.x, position.y, radius * 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+
+        // Draw centered yellow square
+        ctx.beginPath();
+        ctx.fillStyle = "#ffff00"; // bright yellow
+        ctx.fillRect(position.x - halfSize, position.y - halfSize, halfSize * 2, halfSize * 2);
+        ctx.closePath();
+    }
 }
 
 export { EntityRenderer };
