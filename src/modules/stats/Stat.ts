@@ -1,6 +1,6 @@
 class Stat {
     private _name: string;
-    private _value: number;
+    protected _value: number;
     private _baseValue: number;
     private _decayRate: number;
 
@@ -72,7 +72,6 @@ class Stat {
 
     // Update the stat, typically used for buffs, debuffs, or other systems
     update(deltaTime: number): void {
-        console.log("update");
         this.applyDecay(deltaTime);
     }
 

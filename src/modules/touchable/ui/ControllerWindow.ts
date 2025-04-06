@@ -5,6 +5,7 @@ import VectorUtil from "../../math/vectors/VectorUtil";
 import {AppWindowUtil} from "../AppWindowUtil";
 import {IDGen} from "../../math/IdGen";
 import {Monster} from "../../../entities/Monster";
+import {EventBus} from "../../eventbus/EventBus";
 
 class ControllerWindow extends ButtonWindow {
     constructor(game: Game) {
@@ -23,6 +24,7 @@ class ControllerWindow extends ButtonWindow {
         });
         const reloadButton = AppWindowUtil.createButton("Reload", () => {
             game.controller.reload();
+            EventBus.getInstance().reset();
         });
         const spawnButton = AppWindowUtil.createButton("Spawn", () => {
             const model = game.controller.model;
