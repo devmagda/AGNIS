@@ -6,6 +6,8 @@ node_modules/
 dist/
 .parcel-cache/
 
+docs/
+
 # TypeScript build output (if using tsc for separate build process)
 out-tsc/
 
