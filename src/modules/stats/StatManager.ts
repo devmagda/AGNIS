@@ -1,20 +1,25 @@
-import { Stat } from './Stat';
-import { EventBus } from "../eventbus/EventBus";
+import {Stat} from './Stat';
+import {EventBus} from "../eventbus/EventBus";
 import {RuleManager} from "../rules/RuleManager";
-import {HealthHungerRule} from "./StatRuleLib";
 
 class StatsManager {
-    private _stats: Map<string, Stat> = new Map(); // Use a Map to store stats by name
     private _eventBus: EventBus = EventBus.getInstance();
-    protected _statRuleManager: RuleManager<Stat, StatsManager> = new RuleManager<Stat, StatsManager>();
 
     constructor() {
 
     }
 
+    private _stats: Map<string, Stat> = new Map(); // Use a Map to store stats by name
+
     // Get all stats
     get stats() {
         return Array.from(this._stats.values()); // Return stats as an array
+    }
+
+    protected _statRuleManager: RuleManager<Stat, StatsManager> = new RuleManager<Stat, StatsManager>();
+
+    get statRuleManager(): RuleManager<Stat, StatsManager> {
+        return this._statRuleManager;
     }
 
     // Add a stat to the manager (only if a stat with the same name doesn't exist)
@@ -22,10 +27,6 @@ class StatsManager {
         if (!this._stats.has(stat.name)) { // Check if the stat already exists
             this._stats.set(stat.name, stat); // Add the stat to the Map
         }
-    }
-
-    get statRuleManager(): RuleManager<Stat, StatsManager> {
-        return this._statRuleManager;
     }
 
     // Update all stats
@@ -81,4 +82,4 @@ class StatsManager {
     }
 }
 
-export { StatsManager };
+export {StatsManager};

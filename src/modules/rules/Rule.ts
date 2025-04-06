@@ -1,11 +1,8 @@
-import {Stat} from "../stats/Stat";
-
 class Rule<T, U> {
     private conditions: ((t: T) => boolean)[];
     private typeCondition: (t: T) => boolean; // Type check condition
     private onActivateCallback: (t: U) => void;
     private onDeactivateCallback: (t: U) => void;
-    private _name: string;
 
     constructor(
         ruleName: string,
@@ -20,6 +17,8 @@ class Rule<T, U> {
         this.onActivateCallback = onActivateCallback;
         this.onDeactivateCallback = onDeactivateCallback;
     }
+
+    private _name: string;
 
     get name() {
         return this._name;

@@ -9,10 +9,9 @@ import {StatsComponent} from "./components/StatsComponent";
 import {Stat} from "../modules/stats/Stat";
 
 export default class Entity extends ModelEntity implements Drawable {
-    protected _movementComponent: MovementComponent;
-    protected _behaviourComponent: BehaviourComponent;
     protected _statsComponent: StatsComponent;
     protected aliveStat: Stat;
+
     constructor(id: string, spawnLocation: Vector2D, maxSpeed: number, aliveStat: Stat) {
         super(id);
         this._movementComponent = new WrappedMovementComponent(spawnLocation, maxSpeed);
@@ -22,9 +21,25 @@ export default class Entity extends ModelEntity implements Drawable {
         this._statsComponent.statsManager.addStat(aliveStat);
     }
 
+    protected _movementComponent: MovementComponent;
+
+    get movementComponent() {
+        return this._movementComponent;
+    }
+
+    protected _behaviourComponent: BehaviourComponent;
+
+    get behaviourComponent() {
+        return this._behaviourComponent;
+    }
+
+    get isAlive() {
+        return !this.aliveStat.isEmpty();
+    }
+
     draw(ctx: CanvasRenderingContext2D): void {
         const radius = 30;
-        if(this._movementComponent instanceof WrappedMovementComponent) {
+        if (this._movementComponent instanceof WrappedMovementComponent) {
             this._movementComponent.getWrappedPositions(radius).forEach((position: Vector2D) => {
                 EntityRenderer.drawEntity(ctx, position, this._movementComponent.orientation, radius, this._statsComponent);
             });
@@ -33,21 +48,9 @@ export default class Entity extends ModelEntity implements Drawable {
         }
     }
 
-    get behaviourComponent() {
-        return this._behaviourComponent;
-    }
-
-    get movementComponent() {
-        return this._movementComponent;
-    }
-
     update(deltaTime: number) {
         this._behaviourComponent.apply(this);
         this._statsComponent.update(deltaTime);
         this._movementComponent.update(deltaTime);
-    }
-
-    get isAlive() {
-        return !this.aliveStat.isEmpty();
     }
 }

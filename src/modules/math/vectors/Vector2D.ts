@@ -1,18 +1,18 @@
 import * as math from 'mathjs';
 
 export default class Vector2D {
-    private _position: math.Matrix;
-
     constructor(x: number, y: number) {
         this._position = math.matrix([x, y]);
     }
 
-    set position(position: math.Matrix) {
-        this._position = position;
-    }
+    private _position: math.Matrix;
 
     get position() {
         return this._position;
+    }
+
+    set position(position: math.Matrix) {
+        this._position = position;
     }
 
     set inner(vector2D: Vector2D) {
@@ -44,16 +44,12 @@ export default class Vector2D {
         return this._position.get([0]);
     }
 
-    get y(): number {
-        return this._position.get([1]);
-    }
-
-    toString(): string {
-        return `Vector2D(${this.x}, ${this.y})`;
-    }
-
     set x(value: number) {
         this._position.set([0], value);
+    }
+
+    get y(): number {
+        return this._position.get([1]);
     }
 
     set y(value: number) {
@@ -64,6 +60,10 @@ export default class Vector2D {
     get angle(): number {
         const angleRadians = Math.atan2(this.y, this.x);
         return (angleRadians * 180) / Math.PI; // Convert radians to degrees
+    }
+
+    toString(): string {
+        return `Vector2D(${this.x}, ${this.y})`;
     }
 
     normalize(): void {

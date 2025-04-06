@@ -1,11 +1,7 @@
-import {Stat} from "../stats/Stat";
 import {Rule} from "./Rule";
 
 class RuleBuilder<T, U> {
     private conditions: ((t: T) => boolean)[] = [];
-    private typeCondition: (t: T) => boolean = () => true; // Default to always true (no type check)
-    private onActivateCallback: (t: U) => void = () => {};
-    private onDeactivateCallback: (t: U) => void = () => {};
     private ruleName: string;
 
     constructor(ruleName: string) {
@@ -46,6 +42,14 @@ class RuleBuilder<T, U> {
             this.onDeactivateCallback
         );
     }
+
+    private typeCondition: (t: T) => boolean = () => true; // Default to always true (no type check)
+
+    private onActivateCallback: (t: U) => void = () => {
+    };
+
+    private onDeactivateCallback: (t: U) => void = () => {
+    };
 }
 
 export {RuleBuilder};

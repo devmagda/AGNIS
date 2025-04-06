@@ -2,18 +2,19 @@ import Vector2D from "../../../modules/math/vectors/Vector2D";
 import {MovementComponent} from "./MovementComponent";
 
 class BorderedMovementComponent extends MovementComponent {
-    _a: Vector2D; // Upper-left corner
-    _b: Vector2D; // Lower-right corner
-
     constructor(location: Vector2D, maxSpeed: number, a: Vector2D, b: Vector2D) {
         super(location, maxSpeed);
         this._a = a;
         this._b = b;
     }
 
+    _a: Vector2D; // Upper-left corner
+
     get a(): Vector2D {
         return this._a;
     }
+
+    _b: Vector2D; // Lower-right corner
 
     get b(): Vector2D {
         return this._b;
@@ -32,4 +33,4 @@ class BorderedMovementComponent extends MovementComponent {
     }
 }
 
-export { BorderedMovementComponent };
+export {BorderedMovementComponent};

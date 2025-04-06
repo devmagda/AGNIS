@@ -7,9 +7,7 @@ import Behaviour from "../../modules/behaviors/Behaviour";
 import Wander from "../../modules/behaviors/steering/Wander";
 
 class BehaviorComponent {
-    private _currentBehavior: Behaviour;
     private _target: Vector2D; // Target used by behaviors like SeekTarget
-    private _behaviorManager: BehaviorManager; // Manager for all behaviors
 
     constructor() {
         this._behaviorManager = new BehaviorManager(); // Initialize the BehaviorManager
@@ -17,15 +15,24 @@ class BehaviorComponent {
         this._target = new Vector2D(0, 0); // Default target location
     }
 
+    private _currentBehavior: Behaviour;
+
+    // Get the current behavior
+    get currentBehavior(): Behaviour {
+        return this._currentBehavior;
+    }
+
+    private _behaviorManager: BehaviorManager; // Manager for all behaviors
+
+    get behaviorManager(): BehaviourManager {
+        return this._behaviorManager;
+    }
+
     // Apply the current behavior to the entity
     apply(entity: Entity): void {
         if (this._currentBehavior) {
             this._currentBehavior.apply(entity);
         }
-    }
-
-    get behaviorManager(): BehaviourManager {
-        return this._behaviorManager;
     }
 
     // Set the current behavior from the available list
@@ -44,11 +51,6 @@ class BehaviorComponent {
         if (this._currentBehavior instanceof SeekTarget) {
             this._currentBehavior.updateTarget(target); // Update SeekTarget behavior with new target
         }
-    }
-
-    // Get the current behavior
-    get currentBehavior(): Behaviour {
-        return this._currentBehavior;
     }
 }
 

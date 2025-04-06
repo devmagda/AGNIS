@@ -6,6 +6,7 @@ interface Drawable {
 
 class View {
     _lastModel: Model;
+
     constructor() {
         this._lastModel = Model.empty();
     }
@@ -22,10 +23,9 @@ class View {
 }
 
 class ViewCanvas extends View {
+    static canvasSize = 1000;
     _canvas: HTMLCanvasElement;
     _context: CanvasRenderingContext2D;
-
-    static canvasSize = 1000;
 
     constructor(canvas: HTMLCanvasElement) {
         super();
@@ -47,7 +47,7 @@ class ViewCanvas extends View {
         this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
         model.data.forEach((entity: ModelEntity) => {
-            if(entity satisfies Drawable) {
+            if (entity satisfies Drawable) {
                 entity.draw(this._context);
             }
         });

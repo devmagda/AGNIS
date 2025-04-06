@@ -58,4 +58,4 @@ class AppWindowUtil {
     }
 }
 
-export { AppWindowUtil };
+export {AppWindowUtil};

@@ -1,9 +1,4 @@
 class Stat {
-    private _name: string;
-    protected _value: number;
-    private _baseValue: number;
-    private _decayRate: number;
-
     // Modifiers for base value and decay rate (stored separately)
     private _baseValueModifiers: Map<string, number>;
     private _decayRateModifiers: Map<string, number>;
@@ -17,9 +12,20 @@ class Stat {
         this._decayRateModifiers = new Map();
     }
 
+    private _name: string;
+
     get name() {
         return this._name;
     }
+
+    protected _value: number;
+
+    // Getter for the stat value (can be used for current value, e.g., health)
+    get value() {
+        return this._value;
+    }
+
+    private _baseValue: number;
 
     // Getters for the base value and decay rate with modifiers applied
     get baseValue() {
@@ -27,19 +33,25 @@ class Stat {
         return this._baseValue + Array.from(this._baseValueModifiers.values()).reduce((sum, modifier) => sum + modifier, 0);
     }
 
+    private _decayRate: number;
+
     get decayRate() {
         // Apply all decay rate modifiers when retrieving decayRate
         return this._decayRate + Array.from(this._decayRateModifiers.values()).reduce((sum, modifier) => sum + modifier, 0);
     }
 
-    // Getter for the stat value (can be used for current value, e.g., health)
-    get value() {
-        return this._value;
-    }
-
     // Getter for the "full" value (base value + all modifiers)
     get fullValue() {
         return this.baseValue;  // Full value is essentially the base value after applying all modifiers
+    }
+
+    // Getter for the factor of the stat value compared to its full value (a decimal between 0 and 1)
+    get factor(): number {
+        return this._value / this.fullValue;
+    }
+
+    get percentage(): number {
+        return this.factor * 100;
     }
 
     // Apply a modifier to the base value (it will not directly change the base value, just tracked as a modifier)
@@ -93,15 +105,6 @@ class Stat {
     reset() {
         this._value = this.baseValue;
     }
-
-    // Getter for the factor of the stat value compared to its full value (a decimal between 0 and 1)
-    get factor(): number {
-        return this._value / this.fullValue;
-    }
-
-    get percentage(): number {
-        return this.factor * 100;
-    }
 }
 
-export { Stat };
+export {Stat};

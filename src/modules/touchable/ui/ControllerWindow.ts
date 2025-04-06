@@ -1,6 +1,5 @@
 import {ButtonWindow} from "./ButtonWindow";
 import Game from "../../../Game";
-import Entity from "../../../entities/Entity";
 import VectorUtil from "../../math/vectors/VectorUtil";
 import {AppWindowUtil} from "../AppWindowUtil";
 import {IDGen} from "../../math/IdGen";
@@ -29,7 +28,7 @@ class ControllerWindow extends ButtonWindow {
         const spawnButton = AppWindowUtil.createButton("Spawn", () => {
             const model = game.controller.model;
             const view = game.controller.view;
-            model.add(new Monster(IDGen.getId("entity"),  VectorUtil.getRandom(VectorUtil.canvasSize())));
+            model.add(new Monster(IDGen.getId("entity"), VectorUtil.getRandom(VectorUtil.canvasSize())));
             view.update(model);
         });
 

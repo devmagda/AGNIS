@@ -11,4 +11,4 @@ enum EventNames {
     ItemClick = "item-click",
 }
 
-export { EventNames };
+export {EventNames};

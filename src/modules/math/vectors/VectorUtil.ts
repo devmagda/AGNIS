@@ -3,6 +3,7 @@ import Vector2D from "./Vector2D";
 
 export default class VectorUtil {
     static ZERO_VECTOR = new Vector2D(0, 0);
+
     static add(a: Vector2D, b: Vector2D): Vector2D {
         const resultPosition = math.add(a.position, b.position);
         return new Vector2D(resultPosition.get([0]), resultPosition.get([1]));

@@ -1,5 +1,5 @@
 // StatLib.ts - A collection of common stats for games
-import { Stat } from "./Stat";
+import {Stat} from "./Stat";
 import {GrowingStat} from "./GrowingStat";
 
 class HealthStat extends Stat {

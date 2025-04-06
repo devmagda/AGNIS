@@ -3,12 +3,12 @@ import {EventBus} from "../../modules/eventbus/EventBus";
 import {Stat} from "../../modules/stats/Stat";
 
 class StatsComponent {
-    private _statsManager: StatsManager;
-
     constructor() {
         // Initialize the StatsManager with a reference to the EventBus
         this._statsManager = new StatsManager();
     }
+
+    private _statsManager: StatsManager;
 
     // Getter for accessing the StatsManager
     get statsManager(): StatsManager {
@@ -41,4 +41,4 @@ class StatsComponent {
     }
 }
 
-export { StatsComponent };
+export {StatsComponent};

@@ -94,4 +94,4 @@ class EntityRenderer {
     }
 }
 
-export { EntityRenderer };
+export {EntityRenderer};

@@ -40,4 +40,4 @@ const Colors = {
     warning: "#ffcc88"
 };
 
-export { ButtonIds, CanvasId, DivIds, Colors };
+export {ButtonIds, CanvasId, DivIds, Colors};

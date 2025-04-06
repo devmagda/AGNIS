@@ -2,11 +2,7 @@ import Vector2D from "../../../modules/math/vectors/Vector2D";
 import VectorUtil from "../../../modules/math/vectors/VectorUtil";
 
 class MovementComponent {
-    _location: Vector2D;
-    _velocity: Vector2D;
-    _orientation: Vector2D;
     _acceleration: Vector2D;
-    _maxSpeed: number;
 
     constructor(location: Vector2D, maxSpeed: number) {
         this._location = location;
@@ -16,24 +12,20 @@ class MovementComponent {
         this._maxSpeed = maxSpeed;
     }
 
+    _location: Vector2D;
+
     get location(): Vector2D {
         return this._location;
     }
 
-    get velocity(): Vector2D {
-        return this._velocity;
-    }
-
-    get orientation(): Vector2D {
-        return this._orientation;
-    }
-
-    get maxSpeed(): number {
-        return this._maxSpeed;
-    }
-
     set location(value: Vector2D) {
         this._location = value;
+    }
+
+    _velocity: Vector2D;
+
+    get velocity(): Vector2D {
+        return this._velocity;
     }
 
     set velocity(value: Vector2D) {
@@ -41,6 +33,12 @@ class MovementComponent {
         if (!VectorUtil.equals(value, VectorUtil.zero())) {
             this._orientation = VectorUtil.normalize(value);
         }
+    }
+
+    _orientation: Vector2D;
+
+    get orientation(): Vector2D {
+        return this._orientation;
     }
 
     set orientation(value: Vector2D) {
@@ -51,6 +49,12 @@ class MovementComponent {
         } else {
             console.warn('Trying to set rotation for a moving object', this, value);
         }
+    }
+
+    _maxSpeed: number;
+
+    get maxSpeed(): number {
+        return this._maxSpeed;
     }
 
     set maxSpeed(value: number) {

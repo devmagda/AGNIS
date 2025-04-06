@@ -1,18 +1,22 @@
 import {Drawable} from "./View";
-import {IDGen} from "../math/IdGen";
 
 class Model {
-    _data: Map<string, ModelEntity>;
     constructor() {
         this._data = new Map();
     }
 
-    reload() {
-        this._data = new Map();
-    }
+    _data: Map<string, ModelEntity>;
 
     get data() {
         return this._data;
+    }
+
+    static empty() {
+        return new Model();
+    }
+
+    reload() {
+        this._data = new Map();
     }
 
     update(deltaTime: number): void {
@@ -28,10 +32,6 @@ class Model {
         this._data = new Map();
     }
 
-    static empty() {
-        return new Model();
-    }
-
     private removeDeadEntities(): void {
         this._data.forEach((entity, id) => {
             if (!entity.isAlive) {
@@ -42,9 +42,19 @@ class Model {
 }
 
 class ModelEntity implements Drawable {
-    _id: string;
     constructor(id: string) {
         this._id = id;
+    }
+
+    _id: string;
+
+    get id() {
+        return this._id;
+    }
+
+    get isAlive() {
+        console.warn("Calling isAlive on ModelEntity instance, objects should not be initialized directly!");
+        return true;
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
@@ -53,17 +63,8 @@ class ModelEntity implements Drawable {
         throw new Error(errorMessage);
     }
 
-    get id() {
-        return this._id;
-    }
-
     update(deltaTime: number) {
         console.warn('No update function implemented', this, deltaTime);
-    }
-
-    get isAlive() {
-        console.warn("Calling isAlive on ModelEntity instance, objects should not be initialized directly!");
-        return true;
     }
 }
 

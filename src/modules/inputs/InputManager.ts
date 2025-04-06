@@ -4,17 +4,14 @@ import {EventBus} from "../eventbus/EventBus";
 import {EventNames} from "../eventbus/EventNames";
 
 class InputManager {
-    private static _instance: InputManager | null = null;
-
-    private _ctrlModifier: boolean = false;
-    private _shiftModifier: boolean = false;
-    private _mousePosition: Vector2D = VectorUtil.zero();
     private _inputBus = EventBus.getInstance();
 
     private constructor() {
         this.initializeListeners();
         this.setupModifiers();
     }
+
+    private static _instance: InputManager | null = null;
 
     static get instance(): InputManager {
         if (!this._instance) {
@@ -23,16 +20,22 @@ class InputManager {
         return this._instance;
     }
 
-    get mousePosition(): Vector2D {
-        return this._mousePosition;
-    }
+    private _ctrlModifier: boolean = false;
 
     get ctrlModifier() {
         return this._ctrlModifier;
     }
 
+    private _shiftModifier: boolean = false;
+
     get shiftModifier() {
         return this._shiftModifier;
+    }
+
+    private _mousePosition: Vector2D = VectorUtil.zero();
+
+    get mousePosition(): Vector2D {
+        return this._mousePosition;
     }
 
     addKeydown(
@@ -89,7 +92,7 @@ class InputManager {
         const canvas = document.querySelector("canvas#game_canvas") as HTMLCanvasElement;
         if (canvas) {
             window.addEventListener("mousemove", (event: MouseEvent) => {
-                if(this._ctrlModifier) {
+                if (this._ctrlModifier) {
                     this._inputBus.emit<MouseEvent>(EventNames.MouseMoveCtrl, event);
                 }
             });
@@ -115,25 +118,25 @@ class InputManager {
 
     private setupModifiers() {
         this.addKeydown("ControlLeft", (event: KeyboardEvent) => {
-           if(!this._ctrlModifier) {
-               this._ctrlModifier = true;
-           }
+            if (!this._ctrlModifier) {
+                this._ctrlModifier = true;
+            }
         });
 
         this.addKeyup("ControlLeft", (event: KeyboardEvent) => {
-            if(this._ctrlModifier) {
+            if (this._ctrlModifier) {
                 this._ctrlModifier = false;
             }
         });
 
         this.addKeydown("ShiftLeft", (event: KeyboardEvent) => {
-            if(!this._shiftModifier) {
+            if (!this._shiftModifier) {
                 this._shiftModifier = true;
             }
         });
 
         this.addKeyup("ShiftLeft", (event: KeyboardEvent) => {
-            if(this._shiftModifier) {
+            if (this._shiftModifier) {
                 this._shiftModifier = false;
             }
         });

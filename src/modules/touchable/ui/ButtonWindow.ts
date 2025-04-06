@@ -8,6 +8,7 @@ class ButtonWindow extends AppWindow {
         const buttonContainerDiv = AppWindowUtil.createButtonContainer(IDGen.getId("button-window"), buttons);
         this._contentDiv.appendChild(buttonContainerDiv);
     }
+
     protected _setContent(contentDiv: HTMLDivElement): void {
     }
 }

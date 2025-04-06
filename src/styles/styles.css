@@ -107,6 +107,7 @@ h5 {
     align-items: start;
     background-color: var(--bg-secondary);
     padding: 5px;
+
     img {
         width: 20px;
         height: 20px;

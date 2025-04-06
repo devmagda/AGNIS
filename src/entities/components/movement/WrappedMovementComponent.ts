@@ -30,9 +30,9 @@ class WrappedMovementComponent extends ScreenMovementComponent {
     }
 
     getWrappedPositions(radius: number): Vector2D[] {
-        const { x, y } = this._location;
-        const { x: minX, y: minY } = this.a;
-        const { x: maxX, y: maxY } = this.b;
+        const {x, y} = this._location;
+        const {x: minX, y: minY} = this.a;
+        const {x: maxX, y: maxY} = this.b;
 
         let positions = [new Vector2D(x, y)];
 
@@ -52,4 +52,4 @@ class WrappedMovementComponent extends ScreenMovementComponent {
     }
 }
 
-export { WrappedMovementComponent };
+export {WrappedMovementComponent};

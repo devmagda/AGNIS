@@ -3,10 +3,9 @@ import {IDGen} from "../math/IdGen";
 
 class AppWindow {
     protected _id: string;
+    protected _contentDiv: HTMLDivElement;
     private _width: number;
     private _height: number;
-    private _windowDiv: HTMLDivElement;
-    protected _contentDiv: HTMLDivElement;
 
     constructor(title: string, width: number = 300, height: number = 200, x: number = 10, y: number = 10, contentDivClassNames: string[] = []) {
         this._id = IDGen.getId("win");
@@ -22,60 +21,10 @@ class AppWindow {
         this.makeWindowDraggable();
     }
 
+    private _windowDiv: HTMLDivElement;
+
     get windowDiv(): HTMLDivElement {
         return this._windowDiv;
-    }
-
-    private _createWindowDiv(x: number, y: number): HTMLDivElement {
-        const classList = [
-            "app-window",
-        ];
-        return AppWindowUtil.createDiv(IDGen.getId("window"), {}, classList);
-    }
-
-    protected _createHeaderDiv(title: string): HTMLDivElement {
-        const classList = [
-            "app-window",
-            "header"
-        ];
-        const headerDiv = AppWindowUtil.createDiv(IDGen.getId("header"), {}, classList);
-
-        const titleElement = AppWindowUtil.createTitle(title, "p", {});
-        const minimizeButton = AppWindowUtil.createButton("_", () => this._toggleMinimize());
-        const closeButton = AppWindowUtil.createButton("X", () => this._closeWindow());
-
-        headerDiv.appendChild(titleElement);
-        headerDiv.appendChild(minimizeButton);
-        headerDiv.appendChild(closeButton);
-
-        return headerDiv;
-    }
-
-    private _createContentDiv(contentDivClassNames: string[]): HTMLDivElement {
-        contentDivClassNames.push("app-window");
-        contentDivClassNames.push("content");
-
-        const contentDiv = AppWindowUtil.createDiv(IDGen.getId("content"), {}, contentDivClassNames);
-
-        this._setContent(contentDiv);
-        return contentDiv;
-    }
-
-    protected _setContent(contentDiv: HTMLDivElement): void {
-        contentDiv.textContent = "Inner content goes here...";
-    }
-
-    protected _toggleMinimize(): void {
-        const hiddenClassName = "hide";
-
-        if(this._contentDiv.classList.contains(hiddenClassName)) {
-            this._contentDiv.classList.remove(hiddenClassName);
-        } else {
-            this._contentDiv.classList.add(hiddenClassName);
-        }}
-
-    private _closeWindow(): void {
-        this._windowDiv.remove();
     }
 
     public makeWindowDraggable() {
@@ -99,5 +48,59 @@ class AppWindow {
             isDragging = false;
         });
     }
+
+    protected _createHeaderDiv(title: string): HTMLDivElement {
+        const classList = [
+            "app-window",
+            "header"
+        ];
+        const headerDiv = AppWindowUtil.createDiv(IDGen.getId("header"), {}, classList);
+
+        const titleElement = AppWindowUtil.createTitle(title, "p", {});
+        const minimizeButton = AppWindowUtil.createButton("_", () => this._toggleMinimize());
+        const closeButton = AppWindowUtil.createButton("X", () => this._closeWindow());
+
+        headerDiv.appendChild(titleElement);
+        headerDiv.appendChild(minimizeButton);
+        headerDiv.appendChild(closeButton);
+
+        return headerDiv;
+    }
+
+    protected _setContent(contentDiv: HTMLDivElement): void {
+        contentDiv.textContent = "Inner content goes here...";
+    }
+
+    protected _toggleMinimize(): void {
+        const hiddenClassName = "hide";
+
+        if (this._contentDiv.classList.contains(hiddenClassName)) {
+            this._contentDiv.classList.remove(hiddenClassName);
+        } else {
+            this._contentDiv.classList.add(hiddenClassName);
+        }
+    }
+
+    private _createWindowDiv(x: number, y: number): HTMLDivElement {
+        const classList = [
+            "app-window",
+        ];
+        return AppWindowUtil.createDiv(IDGen.getId("window"), {}, classList);
+    }
+
+    private _createContentDiv(contentDivClassNames: string[]): HTMLDivElement {
+        contentDivClassNames.push("app-window");
+        contentDivClassNames.push("content");
+
+        const contentDiv = AppWindowUtil.createDiv(IDGen.getId("content"), {}, contentDivClassNames);
+
+        this._setContent(contentDiv);
+        return contentDiv;
+    }
+
+    private _closeWindow(): void {
+        this._windowDiv.remove();
+    }
 }
+
 export {AppWindow};

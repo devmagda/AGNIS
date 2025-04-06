@@ -1,4 +1,4 @@
-import { Rule } from './Rule'; // Assuming Rule is in the same directory
+import {Rule} from './Rule'; // Assuming Rule is in the same directory
 
 class RuleManager<T, U> {
     private _rules: Map<string, Rule<T, U>> = new Map();
@@ -42,4 +42,4 @@ class RuleManager<T, U> {
     }
 }
 
-export { RuleManager };
+export {RuleManager};

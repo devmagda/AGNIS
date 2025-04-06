@@ -9,7 +9,8 @@ class EventBus {
     private events: EventMap = {};
 
     // Private constructor to prevent instantiation
-    private constructor() {}
+    private constructor() {
+    }
 
     // Static method to get the singleton instance
     public static getInstance(): EventBus {
@@ -44,4 +45,4 @@ class EventBus {
     }
 }
 
-export { EventBus };
+export {EventBus};

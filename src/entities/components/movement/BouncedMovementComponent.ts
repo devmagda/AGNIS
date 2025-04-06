@@ -27,4 +27,4 @@ class BouncedMovementComponent extends ScreenMovementComponent {
     }
 }
 
-export { BouncedMovementComponent };
+export {BouncedMovementComponent};
