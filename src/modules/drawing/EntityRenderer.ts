@@ -56,7 +56,7 @@ class EntityRenderer {
 
         ctx.beginPath();
         ctx.rect(lowerLeft.x, hungerBarY, barWidth, barHeight);
-        ctx.fillStyle = '#FFD700'; // Dark yellow background
+        ctx.fillStyle = '#bf9600'; // Dark yellow background
         ctx.fill();
         ctx.closePath();
 
