@@ -8,7 +8,7 @@ const healthHungerModifierName = "mn-" + healthHungerRuleName + "-modifier";
 
 const healthHungerActivate = (manager: StatsManager) => {
     const healthStat = manager.getStatByName(HealthStat.id);
-    healthStat?.addDecayRateModifier(healthHungerModifierName, 0.001);
+    healthStat?.addDecayRateModifier(healthHungerModifierName, 0.01);
 };
 
 const healthHungerDeactivate = (manager: StatsManager) => {

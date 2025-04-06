@@ -1,8 +1,10 @@
 import Vector2D from "../math/vectors/Vector2D";
 import {Colors} from "../../constants";
+import {StatsComponent} from "../../entities/components/StatsComponent";
+import {HealthStat, HungerStat} from "../stats/StatLib";
 
 class EntityRenderer {
-    static drawEntity(ctx: CanvasRenderingContext2D, position: Vector2D, rotation: Vector2D, radius: number) {
+    static drawEntity(ctx: CanvasRenderingContext2D, position: Vector2D, rotation: Vector2D, radius: number, statsComponent: StatsComponent) {
 
         rotation.normalize();
 
@@ -22,6 +24,46 @@ class EntityRenderer {
         ctx.strokeStyle = Colors.danger; // White line
         ctx.lineWidth = 2;
         ctx.stroke();
+        ctx.closePath();
+
+        const statManager = statsComponent.statsManager;
+
+        const healthStat = statManager.getStatByName(HealthStat.id);
+        const hungerStat = statManager.getStatByName(HungerStat.id);
+
+        const healthFactor = healthStat ? healthStat.factor : -1;
+        const hungerFactor = hungerStat ? hungerStat.factor : -1;
+
+        const lowerLeft = new Vector2D(position.x - radius, position.y + radius);
+
+        const barHeight = 5;
+        const barWidth = 2 * radius;
+
+        ctx.beginPath();
+        ctx.rect(lowerLeft.x, lowerLeft.y, barWidth, barHeight);
+        ctx.fillStyle = '#8B0000'; // Dark red background
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.rect(lowerLeft.x, lowerLeft.y, barWidth * Math.max(0, healthFactor), barHeight);
+        ctx.fillStyle = '#00FF00'; // Green for health
+        ctx.fill();
+        ctx.closePath();
+
+        // Draw hunger bar (yellow)
+        const hungerBarY = lowerLeft.y + barHeight + 2; // Slightly below health bar
+
+        ctx.beginPath();
+        ctx.rect(lowerLeft.x, hungerBarY, barWidth, barHeight);
+        ctx.fillStyle = '#FFD700'; // Dark yellow background
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.rect(lowerLeft.x, hungerBarY, barWidth * Math.max(0, hungerFactor), barHeight);
+        ctx.fillStyle = '#FFFF00'; // Yellow for hunger
+        ctx.fill();
         ctx.closePath();
     }
 

@@ -126,7 +126,7 @@ class HungerStat extends GrowingStat {
     static id = "hunger";
 
     constructor(baseValue: number = 100) {
-        super(HungerStat.id, baseValue, 0.001);
+        super(HungerStat.id, baseValue, 0.01);
     }
 }
 
