@@ -19,6 +19,10 @@ class EventBus {
         return EventBus.instance;
     }
 
+    reset(): void {
+        this.events = {};
+    }
+
     // Subscribe to an event
     on<T = any>(event: string, callback: EventCallback<T>): void {
         if (!this.events[event]) {

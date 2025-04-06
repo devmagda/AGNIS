@@ -1,5 +1,6 @@
 import { Stat } from './Stat';
 import {EventBus} from "../eventbus/EventBus";
+import {EventNames} from "../eventbus/EventNames";
 
 class StatsManager {
     private _stats: Stat[] = [];
@@ -23,6 +24,8 @@ class StatsManager {
         this._stats.forEach(stat => {
             stat.update(deltaTime);
 
+            this._eventBus.emit<Stat>("stat-change-" + stat.name, stat);
+
             // Emit an event when the stat reaches full value
             if (stat.isFull()) {
                 this._eventBus.emit<Stat>("stat-full-" + stat.name, stat);
@@ -37,11 +40,6 @@ class StatsManager {
     // Get a stat by name
     getStatByName(name: string): Stat | undefined {
         return this._stats.find(stat => stat["name"] === name);
-    }
-
-    // Remove a stat by name
-    removeStatByName(name: string): void {
-        this._stats = this._stats.filter(stat => stat["name"] !== name);
     }
 
     // Reset all stats (optional: useful if you want to reset the game or stats)
