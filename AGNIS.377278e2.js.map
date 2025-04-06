@@ -1,1 +1,0 @@
-{"mappings":"AAGA,MAAM,IAAI,IAAI,SAAS,GAAG;AAE1B,QAAQ,GAAG,CAAC","sources":["src/index.ts"],"sourcesContent":["\r\n\r\n\r\nconst a = new Vector2D(1, 2);\r\n\r\nconsole.log(\"Hello, Parcel with TypeScript!\");\r\n"],"names":[],"version":3,"file":"AGNIS.377278e2.js.map","sourceRoot":"/__parcel_source_root/"}
