@@ -13,7 +13,7 @@ class EntityRenderer {
         const healthFactor = healthStat ? healthStat.factor : -1;
 
 
-        const actualRadius = minimalRadius + radius * healthFactor;
+        const actualRadius =  minimalRadius + (radius - minimalRadius) * healthFactor;
 
         rotation.normalize();
 
@@ -39,7 +39,7 @@ class EntityRenderer {
 
         const hungerFactor = hungerStat ? hungerStat.factor : -1;
 
-        const lowerLeft = new Vector2D(position.x - radius, position.y + radius + minimalRadius);
+        const lowerLeft = new Vector2D(position.x - radius, position.y + radius);
 
         const barHeight = 5;
         const barWidth = 2 * radius;
