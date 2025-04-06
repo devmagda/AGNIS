@@ -1,5 +1,5 @@
 import "./imports";
-import Game from "./Game";
+import Game from "./game/Game";
 import VectorUtil from "./modules/math/vectors/VectorUtil";
 import {Monster} from "./entities/Monster";
 import {IDGen} from "./modules/math/IdGen";

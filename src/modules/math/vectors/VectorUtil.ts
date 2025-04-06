@@ -72,4 +72,9 @@ export default class VectorUtil {
         const y = Math.random() * limits.y;
         return new Vector2D(x, y);
     }
+
+    static circularOverlap(a: Vector2D, b: Vector2D, radiusA: number): boolean {
+        const distance = VectorUtil.distance(a, b);
+        return distance <= radiusA;
+    }
 }
