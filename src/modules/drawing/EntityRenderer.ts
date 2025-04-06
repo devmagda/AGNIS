@@ -5,14 +5,23 @@ import {HealthStat, HungerStat} from "../stats/StatLib";
 
 class EntityRenderer {
     static drawEntity(ctx: CanvasRenderingContext2D, position: Vector2D, rotation: Vector2D, radius: number, statsComponent: StatsComponent) {
+        const statManager = statsComponent.statsManager;
+
+        const minimalRadius = 10;
+
+        const healthStat = statManager.getStatByName(HealthStat.id);
+        const healthFactor = healthStat ? healthStat.factor : -1;
+
+
+        const actualRadius = minimalRadius + radius * healthFactor;
 
         rotation.normalize();
 
-        const lineEnd = new Vector2D(position.x + rotation.x * radius, position.y + rotation.y * radius);
+        const lineEnd = new Vector2D(position.x + rotation.x * actualRadius, position.y + rotation.y * actualRadius);
 
         // Draw the circle (entity)
         ctx.beginPath();
-        ctx.arc(position.x, position.y, radius, 0, Math.PI * 2);
+        ctx.arc(position.x, position.y, actualRadius, 0, Math.PI * 2);
         ctx.fillStyle = Colors.bgHighlight;
         ctx.fill();
         ctx.closePath();
@@ -26,15 +35,11 @@ class EntityRenderer {
         ctx.stroke();
         ctx.closePath();
 
-        const statManager = statsComponent.statsManager;
-
-        const healthStat = statManager.getStatByName(HealthStat.id);
         const hungerStat = statManager.getStatByName(HungerStat.id);
 
-        const healthFactor = healthStat ? healthStat.factor : -1;
         const hungerFactor = hungerStat ? hungerStat.factor : -1;
 
-        const lowerLeft = new Vector2D(position.x - radius, position.y + radius);
+        const lowerLeft = new Vector2D(position.x - radius, position.y + radius + minimalRadius);
 
         const barHeight = 5;
         const barWidth = 2 * radius;
