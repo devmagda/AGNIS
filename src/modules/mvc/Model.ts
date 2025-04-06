@@ -63,7 +63,7 @@ class ModelEntity implements Drawable {
 
     get isAlive() {
         console.warn("Calling isAlive on ModelEntity instance, objects should not be initialized directly!");
-        return false;
+        return true;
     }
 }
 
