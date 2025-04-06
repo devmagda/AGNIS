@@ -1,8 +1,11 @@
+<<<<<<< HEAD
+import {EventBus} from "../eventbus/EventBus";
 import Vector2D from "../math/vectors/Vector2D";
 import VectorUtil from "../math/vectors/VectorUtil";
-import {EventBus} from "../eventbus/EventBus";
 import {EventNames} from "../eventbus/EventNames";
 
+=======
+>>>>>>> c9991eb41491ba3eff5ab9becd5aae6634809af4
 class InputManager {
     private _inputBus = EventBus.getInstance();
 
@@ -21,30 +24,37 @@ class InputManager {
     }
 
     private _ctrlModifier: boolean = false;
-
-    get ctrlModifier() {
-        return this._ctrlModifier;
-    }
-
     private _shiftModifier: boolean = false;
-
-    get shiftModifier() {
-        return this._shiftModifier;
-    }
-
-    private _mousePosition: Vector2D = VectorUtil.zero();
+    private _mousePosition: Vector2D = VectorUtil.zero(); // This will track both mouse and touch position
 
     get mousePosition(): Vector2D {
         return this._mousePosition;
     }
 
+    // Adding touch event listeners
+    addTouchstart(
+        keyFn: (event: TouchEvent) => void,
+    ): void {
+        this._inputBus.on<TouchEvent>(EventNames.TouchStart, keyFn);
+    }
+
+    addTouchmove(
+        keyFn: (event: TouchEvent) => void,
+    ): void {
+        this._inputBus.on<TouchEvent>(EventNames.TouchMove, keyFn);
+    }
+
+    addTouchend(
+        keyFn: (event: TouchEvent) => void,
+    ): void {
+        this._inputBus.on<TouchEvent>(EventNames.TouchEnd, keyFn);
+    }
+
+    // Existing mouse event listeners
     addKeydown(
         keyCode: string,
         keyFn: (event: KeyboardEvent) => void,
     ): void {
-        const filteredFunction = (event: KeyboardEvent) => {
-        };
-
         this._inputBus.on<KeyboardEvent>(EventNames.KeyDown + "-" + keyCode, keyFn);
     }
 
@@ -76,6 +86,7 @@ class InputManager {
     private initializeListeners() {
         this.initializeKeyListeners();
         this.initializeMouseListeners();
+        this.initializeTouchListeners(); // Initialize touch listeners
     }
 
     private initializeKeyListeners() {
@@ -113,6 +124,29 @@ class InputManager {
         } else {
             console.error("Could not find canvas while trying to setup the InputManager!", this);
             throw new Error("Could not find canvas while trying to setup the InputManager!");
+        }
+    }
+
+    private initializeTouchListeners() {
+        const canvas = document.querySelector("canvas#game_canvas") as HTMLCanvasElement;
+        if (canvas) {
+            canvas.addEventListener("touchstart", (event: TouchEvent) => {
+                event.preventDefault();
+                this._inputBus.emit<TouchEvent>(EventNames.TouchStart, event);
+            });
+
+            canvas.addEventListener("touchmove", (event: TouchEvent) => {
+                event.preventDefault();
+                // Update mousePosition with the first touch's position (index 0)
+                this._mousePosition.x = event.touches[0].clientX;
+                this._mousePosition.y = event.touches[0].clientY;
+                this._inputBus.emit<TouchEvent>(EventNames.TouchMove, event);
+            });
+
+            canvas.addEventListener("touchend", (event: TouchEvent) => {
+                event.preventDefault();
+                this._inputBus.emit<TouchEvent>(EventNames.TouchEnd, event);
+            });
         }
     }
 
