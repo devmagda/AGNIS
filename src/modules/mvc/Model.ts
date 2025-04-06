@@ -17,6 +17,7 @@ class Model {
 
     update(deltaTime: number): void {
         this._data.forEach(e => e.update(deltaTime));
+        this.removeDeadEntities();
     }
 
     add(entity: ModelEntity): void {
@@ -27,14 +28,16 @@ class Model {
         this._data = new Map();
     }
 
-    static defaultConfig() {
-        const model = new Model();
-        model.add(new ModelEntity(IDGen.getId("entity")));
-        return model;
-    }
-
     static empty() {
         return new Model();
+    }
+
+    private removeDeadEntities(): void {
+        this._data.forEach((entity, id) => {
+            if (!entity.isAlive) {
+                this._data.delete(id);
+            }
+        });
     }
 }
 
@@ -56,6 +59,11 @@ class ModelEntity implements Drawable {
 
     update(deltaTime: number) {
         console.warn('No update function implemented', this, deltaTime);
+    }
+
+    get isAlive() {
+        console.warn("Calling isAlive on ModelEntity instance, objects should not be initialized directly!");
+        return true;
     }
 }
 

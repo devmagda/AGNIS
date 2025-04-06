@@ -4,6 +4,9 @@ import {ViewCanvas} from "./modules/mvc/View";
 import {ControllerWindow} from "./modules/touchable/ui/ControllerWindow";
 import {AppWindowUtil} from "./modules/touchable/AppWindowUtil";
 import {InputManager} from "./modules/inputs/InputManager";
+import {Food} from "./entities/Food";
+import {IDGen} from "./modules/math/IdGen";
+import Vector2D from "./modules/math/vectors/Vector2D";
 
 export default class Game {
     lastId = 0;
@@ -21,6 +24,10 @@ export default class Game {
         this._windowManager.addWindow(new ControllerWindow(this));
 
         this._inputManager = InputManager.instance;
+
+        this._inputManager.addMousemove((event: MouseEvent) => {
+            this._controller._model.add(new Food(IDGen.getId("food"), new Vector2D(event.clientX, event.clientY)));
+        });
 
     }
 

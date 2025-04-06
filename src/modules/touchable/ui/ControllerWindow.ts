@@ -4,6 +4,7 @@ import Entity from "../../../entities/Entity";
 import VectorUtil from "../../math/vectors/VectorUtil";
 import {AppWindowUtil} from "../AppWindowUtil";
 import {IDGen} from "../../math/IdGen";
+import {Monster} from "../../../entities/Monster";
 
 class ControllerWindow extends ButtonWindow {
     constructor(game: Game) {
@@ -18,7 +19,7 @@ class ControllerWindow extends ButtonWindow {
             game.stop();
         });
         const nextButton = AppWindowUtil.createButton("Next", () => {
-            game.controller.update();
+            game.controller.update(1);
         });
         const reloadButton = AppWindowUtil.createButton("Reload", () => {
             game.controller.reload();
@@ -26,7 +27,7 @@ class ControllerWindow extends ButtonWindow {
         const spawnButton = AppWindowUtil.createButton("Spawn", () => {
             const model = game.controller.model;
             const view = game.controller.view;
-            model.add(new Entity(IDGen.getId("entity"),  VectorUtil.getRandom(VectorUtil.canvasSize())));
+            model.add(new Monster(IDGen.getId("entity"),  VectorUtil.getRandom(VectorUtil.canvasSize())));
             view.update(model);
         });
 

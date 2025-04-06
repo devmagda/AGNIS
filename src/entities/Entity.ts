@@ -5,14 +5,21 @@ import BehaviourComponent from "./components/BehaviourComponent";
 import {MovementComponent} from "./components/movement/MovementComponent";
 import {WrappedMovementComponent} from "./components/movement/WrappedMovementComponent";
 import {EntityRenderer} from "../modules/drawing/EntityRenderer";
+import {StatsComponent} from "./components/StatsComponent";
+import {Stat} from "../modules/stats/Stat";
 
 export default class Entity extends ModelEntity implements Drawable {
-    _movementComponent: MovementComponent;
-    _behaviourComponent: BehaviourComponent;
-    constructor(id: string, spawnLocation: Vector2D, maxSpeed: number = 0.05 + Math.random() * 0.1) {
+    protected _movementComponent: MovementComponent;
+    protected _behaviourComponent: BehaviourComponent;
+    protected _statsComponent: StatsComponent;
+    protected aliveStat: Stat;
+    constructor(id: string, spawnLocation: Vector2D, maxSpeed: number, aliveStat: Stat) {
         super(id);
         this._movementComponent = new WrappedMovementComponent(spawnLocation, maxSpeed);
         this._behaviourComponent = new BehaviourComponent();
+        this._statsComponent = new StatsComponent();
+        this.aliveStat = aliveStat;
+        this._statsComponent.statsManager.addStat(aliveStat);
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
@@ -36,6 +43,11 @@ export default class Entity extends ModelEntity implements Drawable {
 
     update(deltaTime: number) {
         this._behaviourComponent.apply(this);
+        this._statsComponent.update(deltaTime);
         this._movementComponent.update(deltaTime);
+    }
+
+    get isAlive() {
+        return !this.aliveStat.isEmpty();
     }
 }
