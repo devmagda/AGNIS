@@ -35,6 +35,16 @@ class EntityRenderer {
         ctx.stroke();
         ctx.closePath();
 
+
+        //Draw an outline for the circle also
+        ctx.beginPath();
+        ctx.arc(position.x, position.y, actualRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = Colors.danger; // Set outline color
+        ctx.lineWidth = 2; // Set the outline thickness
+        ctx.stroke();
+        ctx.closePath();
+
+
         const hungerStat = statManager.getStatByName(HungerStat.id);
 
         const hungerFactor = hungerStat ? hungerStat.factor : -1;
