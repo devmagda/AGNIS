@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+
+# Parcel cache and build output
+.cache/
+dist/
+.parcel-cache/
+
+# TypeScript build output (if using tsc for separate build process)
+out-tsc/
+
+# VSCode settings folder
+.vscode/
+
+# OS-specific files
+.DS_Store      # macOS
+Thumbs.db      # Windows
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE specific files
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Temporary files
+*.swp
+*.swo
+
+TODO.txt
