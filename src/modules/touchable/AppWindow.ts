@@ -31,22 +31,52 @@ class AppWindow {
         let isDragging = false;
         let offsetX: number, offsetY: number;
 
+        // Add mouse event listeners
         this._windowDiv.addEventListener('mousedown', (e) => {
             isDragging = true;
             offsetX = e.clientX - this._windowDiv.offsetLeft;
             offsetY = e.clientY - this._windowDiv.offsetTop;
         });
 
-        document.addEventListener('mousemove', (e) => {
-            if (isDragging) {
-                this._windowDiv.style.left = `${e.clientX - offsetX}px`;
-                this._windowDiv.style.top = `${e.clientY - offsetY}px`;
-            }
+        // Add touch event listeners
+        this._windowDiv.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevents scrolling while dragging
+            isDragging = true;
+            const touch = e.touches[0];
+            offsetX = touch.clientX - this._windowDiv.offsetLeft;
+            offsetY = touch.clientY - this._windowDiv.offsetTop;
         });
 
-        document.addEventListener('mouseup', () => {
+        // Move window on mousemove or touchmove
+        const moveHandler = (e: MouseEvent | TouchEvent) => {
+            if (isDragging) {
+                let clientX, clientY;
+
+                if (e instanceof MouseEvent) {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                } else if (e instanceof TouchEvent && e.touches.length > 0) {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                }
+
+                if (clientX !== undefined && clientY !== undefined) {
+                    this._windowDiv.style.left = `${clientX - offsetX}px`;
+                    this._windowDiv.style.top = `${clientY - offsetY}px`;
+                }
+            }
+        };
+
+        document.addEventListener('mousemove', moveHandler);
+        document.addEventListener('touchmove', moveHandler);
+
+        // Stop dragging on mouseup or touchend
+        const stopDrag = () => {
             isDragging = false;
-        });
+        };
+
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchend', stopDrag);
     }
 
     protected _createHeaderDiv(title: string): HTMLDivElement {
