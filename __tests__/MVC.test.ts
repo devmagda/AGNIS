@@ -41,13 +41,13 @@ describe("ModelEntity", () => {
 
 describe("Controller", () => {
     test("should initialize with an empty model and a view", () => {
-        const controller = new Controller(new View());
+        const controller = new Controller(new View(), new Model());
         expect(controller.model.data.size).toBe(0);
         expect(controller.view).toBeInstanceOf(View);
     });
 
     test("should update model and view", () => {
-        const controller = new Controller(new View());
+        const controller = new Controller(new View(), new Model());
         const model = new Model();
         model.add(new ModelEntity("0"));
         controller.model = model;
@@ -57,7 +57,7 @@ describe("Controller", () => {
     });
 
     test("should reload the model with default configuration", () => {
-        const controller = new Controller(new View());
+        const controller = new Controller(new View(), new Model());
         controller.reload();
         expect(controller.model.data.size).toBe(0);
     });
