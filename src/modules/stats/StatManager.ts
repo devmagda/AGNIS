@@ -1,27 +1,28 @@
 import { Stat } from './Stat';
-import {EventBus} from "../eventbus/EventBus";
-import {EventNames} from "../eventbus/EventNames";
+import { EventBus } from "../eventbus/EventBus";
+import { EventNames } from "../eventbus/EventNames";
 
 class StatsManager {
-    private _stats: Stat[] = [];
+    private _stats: Map<string, Stat> = new Map(); // Use a Map to store stats by name
     private _eventBus: EventBus = EventBus.getInstance();
 
-    constructor() {
-    }
+    constructor() {}
 
     // Get all stats
     get stats() {
-        return this._stats;
+        return Array.from(this._stats.values()); // Return stats as an array
     }
 
-    // Add a stat to the manager
+    // Add a stat to the manager (only if a stat with the same name doesn't exist)
     addStat(stat: Stat): void {
-        this._stats.push(stat);
+        if (!this._stats.has(stat.name)) { // Check if the stat already exists
+            this._stats.set(stat.name, stat); // Add the stat to the Map
+        }
     }
 
     // Update all stats
     update(deltaTime: number): void {
-        this._stats.forEach(stat => {
+        this._stats.forEach((stat) => {
             stat.update(deltaTime);
 
             this._eventBus.emit<Stat>("stat-change-" + stat.name, stat);
@@ -39,12 +40,12 @@ class StatsManager {
 
     // Get a stat by name
     getStatByName(name: string): Stat | undefined {
-        return this._stats.find(stat => stat["name"] === name);
+        return this._stats.get(name); // Use Map's get method to retrieve the stat by name
     }
 
-    // Reset all stats (optional: useful if you want to reset the game or stats)
+    // Reset all stats
     resetStats(): void {
-        this._stats.forEach(stat => stat.reset());
+        this._stats.forEach((stat) => stat.reset());
     }
 
     // Get the value of a specific stat by name
