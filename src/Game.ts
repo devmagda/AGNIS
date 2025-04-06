@@ -26,7 +26,8 @@ export default class Game {
         this._inputManager = InputManager.instance;
 
         this._inputManager.addMousemove((event: MouseEvent) => {
-            this._controller._model.add(new Food(IDGen.getId("food"), new Vector2D(event.clientX, event.clientY)));
+            this._controller.model.add(new Food(IDGen.getId("food"), new Vector2D(event.clientX, event.clientY)));
+            this._controller.view.update(this._controller.model);
         });
 
     }
