@@ -1,12 +1,16 @@
 import { Stat } from './Stat';
 import { EventBus } from "../eventbus/EventBus";
-import { EventNames } from "../eventbus/EventNames";
+import {RuleManager} from "../rules/RuleManager";
+import {HealthHungerRule} from "./StatRuleLib";
 
 class StatsManager {
     private _stats: Map<string, Stat> = new Map(); // Use a Map to store stats by name
     private _eventBus: EventBus = EventBus.getInstance();
+    protected _statRuleManager: RuleManager<Stat, StatsManager> = new RuleManager<Stat, StatsManager>();
 
-    constructor() {}
+    constructor() {
+
+    }
 
     // Get all stats
     get stats() {
@@ -20,10 +24,16 @@ class StatsManager {
         }
     }
 
+    get statRuleManager(): RuleManager<Stat, StatsManager> {
+        return this._statRuleManager;
+    }
+
     // Update all stats
     update(deltaTime: number): void {
         this._stats.forEach((stat) => {
             stat.update(deltaTime);
+
+            this._statRuleManager.evaluateAll(stat, this);
 
             this._eventBus.emit<Stat>("stat-change-" + stat.name, stat);
 
