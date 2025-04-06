@@ -1,12 +1,14 @@
-import {AppWindowManager} from "./modules/touchable/AppWindowManager";
-import Controller from "./modules/mvc/Controller";
-import {ViewCanvas} from "./modules/mvc/View";
-import {ControllerWindow} from "./modules/touchable/ui/ControllerWindow";
-import {AppWindowUtil} from "./modules/touchable/AppWindowUtil";
-import {InputManager} from "./modules/inputs/InputManager";
-import {Food} from "./entities/Food";
-import {IDGen} from "./modules/math/IdGen";
-import Vector2D from "./modules/math/vectors/Vector2D";
+import {AppWindowManager} from "../modules/touchable/AppWindowManager";
+import Controller from "../modules/mvc/Controller";
+import {ControllerWindow} from "../modules/touchable/ui/ControllerWindow";
+import {AppWindowUtil} from "../modules/touchable/AppWindowUtil";
+import {InputManager} from "../modules/inputs/InputManager";
+import {Food} from "../entities/Food";
+import {IDGen} from "../modules/math/IdGen";
+import Vector2D from "../modules/math/vectors/Vector2D";
+import {GameController} from "./GameController";
+import {GameView} from "./GameView";
+import {GameModel} from "./GameModel";
 
 export default class Game {
     lastId = 0;
@@ -17,7 +19,7 @@ export default class Game {
         const canvas = AppWindowUtil.createGameCanvas('game_canvas', window.innerWidth, window.innerHeight);
         document.body.appendChild(canvas);
 
-        this._controller = new Controller(new ViewCanvas(canvas));
+        this._controller = new GameController(new GameView(canvas), new GameModel());
         this._windowManager = new AppWindowManager();
         this._windowManager.addWindow(new ControllerWindow(this));
 

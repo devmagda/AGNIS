@@ -1,5 +1,5 @@
 import {ButtonWindow} from "./ButtonWindow";
-import Game from "../../../Game";
+import Game from "../../../game/Game";
 import VectorUtil from "../../math/vectors/VectorUtil";
 import {AppWindowUtil} from "../AppWindowUtil";
 import {IDGen} from "../../math/IdGen";
@@ -19,7 +19,7 @@ class ControllerWindow extends ButtonWindow {
             game.stop();
         });
         const nextButton = AppWindowUtil.createButton("Next", () => {
-            game.controller.update(1);
+            game.controller.update(10);
         });
         const reloadButton = AppWindowUtil.createButton("Reload", () => {
             game.controller.reload();
