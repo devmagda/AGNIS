@@ -16,7 +16,7 @@ export default class Controller {
         this._view = view;
 
         EventBus.getInstance().on<MouseEvent>(EventNames.MouseClick, (event: MouseEvent) => {
-           this._model.add(new Food(IDGen.getId("entity"), new Vector2D(event.clientX, event.clientY)));
+           this._model.add(new Food(IDGen.getId("food"), new Vector2D(event.clientX, event.clientY)));
            this._view.update(this._model);
         });
     }
@@ -45,7 +45,7 @@ export default class Controller {
 
     static defaultConfig(view: View): Controller {
         const defaultController = new Controller(view);
-        defaultController.model = Model.defaultConfig();
+        defaultController.model = new Model();
         defaultController.view.update(defaultController.model);
         return defaultController;
     }

@@ -58,6 +58,12 @@ class InputManager {
         this._inputBus.on<MouseEvent>(EventNames.MouseDown, keyFn);
     }
 
+    addMousemove(
+        keyFn: (event: MouseEvent) => void,
+    ): void {
+        this._inputBus.on<MouseEvent>(EventNames.MouseMoveCtrl, keyFn);
+    }
+
     addMouseup(
         keyFn: (event: MouseEvent) => void,
     ): void {
