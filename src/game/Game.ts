@@ -11,7 +11,6 @@ import {GameView} from "./GameView";
 import {GameModel} from "./GameModel";
 
 export default class Game {
-    lastId = 0;
     _lastFrameTime = 0;
     _inputManager: InputManager;
 
