@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 import {EventBus} from "../eventbus/EventBus";
 import Vector2D from "../math/vectors/Vector2D";
 import VectorUtil from "../math/vectors/VectorUtil";
 import {EventNames} from "../eventbus/EventNames";
 
-=======
->>>>>>> c9991eb41491ba3eff5ab9becd5aae6634809af4
 class InputManager {
     private _inputBus = EventBus.getInstance();
 
