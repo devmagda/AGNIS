@@ -5,6 +5,11 @@ class GameModel extends Model {
         super();
 
     }
+
+    update(delta: number): void {
+        super.update(delta);
+
+    }
 }
 
 export {GameModel};
