@@ -5,7 +5,7 @@ class Model {
         this._data = new Map();
     }
 
-    _data: Map<string, ModelEntity>;
+    protected _data: Map<string, ModelEntity>;
 
     get data() {
         return this._data;
@@ -38,6 +38,11 @@ class Model {
                 this._data.delete(id);
             }
         });
+    }
+
+    getFilteredValues(filterFn: (entity: ModelEntity) => boolean): ModelEntity[] {
+        // Use Array.from to convert the filtered values into an array
+        return Array.from(this._data.values()).filter(filterFn);
     }
 }
 
