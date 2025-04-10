@@ -11,6 +11,8 @@ class BehaviorComponent {
 
     constructor() {
         this._behaviorManager = new BehaviorManager(); // Initialize the BehaviorManager
+        this.behaviorManager.addBehavior(new SeekTarget(new Vector2D(0,0)));
+        this.behaviorManager.addBehavior(new Wander());
         this._currentBehavior = this._behaviorManager.getBehavior('Wander') || new Wander(); // Default to Wander
         this._target = new Vector2D(0, 0); // Default target location
     }

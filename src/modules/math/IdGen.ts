@@ -8,4 +8,8 @@ class IDGen {
     }
 }
 
-export {IDGen}
+interface Idable {
+    id: string;
+}
+
+export {IDGen, Idable}

@@ -2,6 +2,7 @@ import Vector2D from "../../math/vectors/Vector2D";
 import Behaviour from "../Behaviour";
 import Entity from "../../../entities/Entity";
 import VectorUtil from "../../math/vectors/VectorUtil";
+import {EventBus} from "../../eventbus/EventBus";
 
 class SeekTarget implements Behaviour {
     protected _target: Vector2D;
