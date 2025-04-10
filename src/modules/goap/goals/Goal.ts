@@ -11,6 +11,8 @@ interface Goal extends Idable {
 
     hasSubGoal(goalId: string): boolean;
 
+    hasSubGoals(): boolean;
+
     equals(goal: Goal): boolean;  // Add this method to compare goals
 
     getBestSubGoal(): Goal | null;

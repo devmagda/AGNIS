@@ -47,6 +47,10 @@ abstract class BaseGoal implements Goal {
     static bestSubGoalFilterFunction(goal: Goal): boolean {
         return !goal.isSatisfied() && goal.getPriority() > 0;
     }
+
+    hasSubGoals(): boolean {
+        return this.getSubGoals().length !== 0;
+    }
 }
 
 export { BaseGoal };

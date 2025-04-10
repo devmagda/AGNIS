@@ -19,17 +19,13 @@ class GoalManager {
         let currentGoal: Goal | null = this._rootGoal;
 
         while (!selectedGoal) {
-            // Get the best possible subgoal
             currentGoal = currentGoal.getBestSubGoal();
 
-            // If there are no more subgoals to consider, return the root goal as fallback
             if (!currentGoal) {
-                return this._rootGoal; // Fallback to root goal if no subgoal is found
+                return this._rootGoal;
             }
 
-            // Check if the current goal is satisfied
-            if (currentGoal.isSatisfied()) {
-                // If satisfied, return this goal (it’s the one we want)
+            if (!currentGoal.hasSubGoals()) {
                 selectedGoal = currentGoal;
             }
         }
