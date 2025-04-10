@@ -9,7 +9,7 @@ abstract class BaseAction implements Action {
 
     abstract checkPreconditions(): boolean;
 
-    abstract execute(): void;
+    abstract execute(): boolean;
 
     abstract getCost(): number;
 

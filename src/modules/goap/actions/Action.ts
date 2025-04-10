@@ -3,7 +3,7 @@ import {Idable} from "../../math/IdGen";
 interface Action extends Idable {
     checkPreconditions(): boolean;
 
-    execute(): void;
+    execute(): boolean;
 
     getCost(): number;
 

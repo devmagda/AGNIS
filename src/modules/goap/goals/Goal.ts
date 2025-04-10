@@ -9,9 +9,11 @@ interface Goal extends Idable {
 
     getSubGoals(): Goal[];
 
-    hasSubGoal(goalId: Goal): boolean;
+    hasSubGoal(goalId: string): boolean;
 
     equals(goal: Goal): boolean;  // Add this method to compare goals
+
+    getBestSubGoal(): Goal | null;
 }
 
 export {Goal};

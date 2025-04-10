@@ -13,6 +13,7 @@ class AppWindowUtil {
         classList.push("tui");
         button.textContent = text;
         button.onclick = onClick;
+        button.addEventListener("touchstart", onClick);
         Object.assign(button.style, styles);
         button.classList.add(...classList);
         return button;
