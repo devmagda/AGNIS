@@ -1,4 +1,5 @@
 import {Idable} from "../../math/IdGen";
+import {ActionManager} from "../actions/ActionManager";
 
 interface Goal extends Idable {
     getPriority(): number;
@@ -16,6 +17,10 @@ interface Goal extends Idable {
     equals(goal: Goal): boolean;  // Add this method to compare goals
 
     getBestSubGoal(): Goal | null;
+
+    getDescription(): string;
+
+    execute(actionManager: ActionManager): boolean;
 }
 
 export {Goal};

@@ -9,7 +9,7 @@ class StatsManager {
 
     }
 
-    private _stats: Map<string, Stat> = new Map(); // Use a Map to store stats by name
+    private _stats: Map<string, Stat> = new Map(); // Use a Map to store stats by id
 
     // Get all stats
     get stats() {
@@ -22,10 +22,10 @@ class StatsManager {
         return this._statRuleManager;
     }
 
-    // Add a stat to the manager (only if a stat with the same name doesn't exist)
+    // Add a stat to the manager (only if a stat with the same id doesn't exist)
     addStat(stat: Stat): void {
-        if (!this._stats.has(stat.name)) { // Check if the stat already exists
-            this._stats.set(stat.name, stat); // Add the stat to the Map
+        if (!this._stats.has(stat.id)) { // Check if the stat already exists
+            this._stats.set(stat.id, stat); // Add the stat to the Map
         }
     }
 
@@ -36,22 +36,22 @@ class StatsManager {
 
             this._statRuleManager.evaluateAll(stat, this);
 
-            this._eventBus.emit<Stat>("stat-change-" + stat.name, stat);
+            this._eventBus.emit<Stat>("stat-change-" + stat.id, stat);
 
             // Emit an event when the stat reaches full value
             if (stat.isFull()) {
-                this._eventBus.emit<Stat>("stat-full-" + stat.name, stat);
+                this._eventBus.emit<Stat>("stat-full-" + stat.id, stat);
             }
 
             if (stat.isEmpty()) {
-                this._eventBus.emit<Stat>("stat-empty-" + stat.name, stat);
+                this._eventBus.emit<Stat>("stat-empty-" + stat.id, stat);
             }
         });
     }
 
-    // Get a stat by name
-    getStatByName(name: string): Stat | undefined {
-        return this._stats.get(name); // Use Map's get method to retrieve the stat by name
+    // Get a stat by id
+    getStatById(id: string): Stat | undefined {
+        return this._stats.get(id); // Use Map's get method to retrieve the stat by id
     }
 
     // Reset all stats
@@ -59,23 +59,23 @@ class StatsManager {
         this._stats.forEach((stat) => stat.reset());
     }
 
-    // Get the value of a specific stat by name
-    getStatValue(name: string): number | undefined {
-        const stat = this.getStatByName(name);
+    // Get the value of a specific stat by id
+    getStatValue(id: string): number | undefined {
+        const stat = this.getStatById(id);
         return stat ? stat.value : undefined;
     }
 
     // Add a modifier to a stat's base value
-    addStatBaseValueModifier(name: string, modifierKey: string, modifierValue: number): void {
-        const stat = this.getStatByName(name);
+    addStatBaseValueModifier(id: string, modifierKey: string, modifierValue: number): void {
+        const stat = this.getStatById(id);
         if (stat) {
             stat.addBaseValueModifier(modifierKey, modifierValue);
         }
     }
 
     // Add a modifier to a stat's decay rate
-    addStatDecayRateModifier(name: string, modifierKey: string, modifierValue: number): void {
-        const stat = this.getStatByName(name);
+    addStatDecayRateModifier(id: string, modifierKey: string, modifierValue: number): void {
+        const stat = this.getStatById(id);
         if (stat) {
             stat.addDecayRateModifier(modifierKey, modifierValue);
         }

@@ -14,6 +14,16 @@ class GrowingStat extends Stat {
         }
     }
 
+    add(value: number): void {
+        this._value -= value;
+        if(this._value < 0) {
+            this.reset();
+        }
+    }
+
+    reset() {
+        this._value = 0;
+    }
 }
 
 export {GrowingStat};

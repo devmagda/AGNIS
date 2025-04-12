@@ -1,6 +1,6 @@
 // StatLib.ts - A collection of common stats for games
-import {Stat} from "./Stat";
-import {GrowingStat} from "./GrowingStat";
+import {Stat} from "../../modules/stats/Stat";
+import {GrowingStat} from "../../modules/stats/GrowingStat";
 
 class HealthStat extends Stat {
     static id = "health"; // Static id for HealthStat
@@ -15,6 +15,13 @@ class DurabilityStat extends Stat {
 
     constructor(baseValue: number = 100, decayRate: number = 0.01) {
         super(DurabilityStat.id, baseValue, decayRate);  // Pass static id to the parent constructor
+    }
+}
+
+class FoodItemCount extends Stat {
+    static id = "foodItemCount";
+    constructor(baseValue: number = 1, decayRate: number = 0) {
+        super(FoodItemCount.id, baseValue, decayRate);
     }
 }
 
@@ -146,5 +153,6 @@ export {
     HealthRegenStat,
     ManaRegenStat,
     ExperienceStat,
-    HungerStat
+    HungerStat,
+    FoodItemCount
 };

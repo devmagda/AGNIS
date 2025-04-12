@@ -16,6 +16,10 @@ class RootGoal extends BaseGoal {
     getRelevantActions(): string[] {
         return [];
     }
+
+    getDescription(): string {
+        return "The goal that always represents the Root of the Goal Tree.";
+    }
 }
 
 export {RootGoal};

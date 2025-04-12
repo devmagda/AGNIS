@@ -1,7 +1,9 @@
 import Vector2D from "../math/vectors/Vector2D";
 import {Colors} from "../../constants";
 import {StatsComponent} from "../../entities/components/StatsComponent";
-import {HealthStat, HungerStat} from "../stats/StatLib";
+import {HealthStat, HungerStat} from "../../entities/stats/StatLib";
+import VectorUtil from "../math/vectors/VectorUtil";
+import Wander from "../behaviors/steering/Wander";
 
 class EntityRenderer {
     static drawEntity(ctx: CanvasRenderingContext2D, position: Vector2D, rotation: Vector2D, radius: number, statsComponent: StatsComponent) {
@@ -9,13 +11,10 @@ class EntityRenderer {
 
         const minimalRadius = 10;
 
-        const healthStat = statManager.getStatByName(HealthStat.id);
+        const healthStat = statManager.getStatById(HealthStat.id);
         const healthFactor = healthStat ? healthStat.factor : -1;
 
-
         const actualRadius =  minimalRadius + (radius - minimalRadius) * healthFactor;
-
-        rotation.normalize();
 
         const lineEnd = new Vector2D(position.x + rotation.x * actualRadius, position.y + rotation.y * actualRadius);
 
@@ -45,7 +44,7 @@ class EntityRenderer {
         ctx.closePath();
 
 
-        const hungerStat = statManager.getStatByName(HungerStat.id);
+        const hungerStat = statManager.getStatById(HungerStat.id);
 
         const hungerFactor = hungerStat ? hungerStat.factor : -1;
 

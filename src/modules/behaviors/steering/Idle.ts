@@ -3,20 +3,10 @@ import VectorUtil from "../../math/vectors/VectorUtil";
 import Entity from "../../../entities/Entity";
 import Behaviour from "../Behaviour";
 
-class Wander implements Behaviour {
-    private _radius: number; // Wander radius
-    private _wanderDistance: number; // Distance to wander
-    private _wanderJitter: number; // Jitter amount to make the wander direction more random
-    private _currentAngle: number = 0; // Keeps track of the current wander angle
-
-    constructor(radius: number = 10, wanderDistance: number = 5, wanderJitter: number = 1) {
-        this._radius = radius;
-        this._wanderDistance = wanderDistance;
-        this._wanderJitter = wanderJitter;
-    }
+class Idle implements Behaviour {
 
     apply(entity: Entity): void {
-        const factor = Math.random() * 0.01;
+        const factor = 0.0002;
         this.wander(entity, factor);
     }
 
@@ -35,4 +25,4 @@ class Wander implements Behaviour {
     }
 }
 
-export default Wander;
+export default Idle;

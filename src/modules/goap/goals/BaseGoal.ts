@@ -1,4 +1,5 @@
 import { Goal } from "./Goal";
+import {ActionManager} from "../actions/ActionManager";
 
 abstract class BaseGoal implements Goal {
     id: string;
@@ -12,6 +13,7 @@ abstract class BaseGoal implements Goal {
     abstract getPriority(): number;
     abstract isSatisfied(): boolean;
     abstract getRelevantActions(): string[];
+    abstract getDescription(): string;
 
     hasSubGoal(goalId: string): boolean {
         return this.subGoals.has(goalId);
@@ -29,13 +31,29 @@ abstract class BaseGoal implements Goal {
         this.subGoals.delete(goalId);
     }
 
+    execute(actionManager: ActionManager): boolean {
+        let failed = 0;
+        this.getRelevantActions().forEach((actionName: string) => {
+            const action = actionManager.getAction(actionName);
+            if(action) {
+                const successful = action.checkPreconditions() && action.execute();
+                if(!successful) {
+                    failed++;
+                }
+            }
+        });
+
+        return failed === 0;
+    }
+
     equals(goal: Goal): boolean {
         return goal.id === this.id;
     }
 
     getBestSubGoal(): Goal | null {
         const bestGoals = Array.from(this.subGoals.values())
-            .filter(BaseGoal.bestSubGoalFilterFunction);
+        //    .filter(BaseGoal.bestSubGoalFilterFunction)
+        ;
 
         if (bestGoals.length === 0) {
             return null;
@@ -45,12 +63,17 @@ abstract class BaseGoal implements Goal {
     }
 
     static bestSubGoalFilterFunction(goal: Goal): boolean {
-        return !goal.isSatisfied() && goal.getPriority() > 0;
+        return !goal.isSatisfied() && goal.getPriority() >= 0;
     }
 
     hasSubGoals(): boolean {
         return this.getSubGoals().length !== 0;
     }
+
+    toString(): string {
+        return `Goal(${this.id}, priority=${this.getPriority()}, satisfied=${this.isSatisfied()})`;
+    }
+
 }
 
 export { BaseGoal };

@@ -25,7 +25,7 @@ class Model {
     }
 
     add(entity: ModelEntity): void {
-        this._data.set(entity.id, entity);
+        this._data.set(entity.uuid, entity);
     }
 
     clear() {
@@ -46,16 +46,9 @@ class Model {
     }
 }
 
-class ModelEntity implements Drawable {
-    constructor(id: string) {
-        this._id = id;
-    }
-
-    _id: string;
-
-    get id() {
-        return this._id;
-    }
+abstract class ModelEntity implements Drawable {
+    public abstract readonly id: string;
+    public abstract readonly uuid: string;
 
     get isAlive() {
         console.warn("Calling isAlive on ModelEntity instance, objects should not be initialized directly!");
