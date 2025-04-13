@@ -4,34 +4,56 @@ import Entity from "../../../entities/Entity";
 import Behaviour from "../Behaviour";
 
 class Wander implements Behaviour {
-    private _radius: number; // Wander radius
-    private _wanderDistance: number; // Distance to wander
-    private _wanderJitter: number; // Jitter amount to make the wander direction more random
-    private _currentAngle: number = 0; // Keeps track of the current wander angle
+    private wanderAngle: number = Math.random() * Math.PI * 2;
+    private readonly angleChange: number;
+    private readonly circleDistance: number;
+    private readonly circleRadius: number;
 
-    constructor(radius: number = 10, wanderDistance: number = 5, wanderJitter: number = 1) {
-        this._radius = radius;
-        this._wanderDistance = wanderDistance;
-        this._wanderJitter = wanderJitter;
+    constructor(
+        circleDistance = 1.5,  // how far ahead the "wander circle" is
+        circleRadius = 1.0,    // how wide the wiggle is
+        angleChange = 0.3      // how much the wander direction changes each frame
+    ) {
+        this.circleDistance = circleDistance;
+        this.circleRadius = circleRadius;
+        this.angleChange = angleChange;
     }
 
     apply(entity: Entity): void {
-        const factor = Math.random() * 0.01;
-        this.wander(entity, factor);
-    }
+        if (!entity.movementComponent) return;
 
-    wander(entity: Entity, factor: number): void {
-        const doubledFactor = factor + factor;
+        const movement = entity.movementComponent;
+        const velocity = movement.velocity;
 
-        const movementComponent = entity.movementComponent;
-        const x = (Math.random() * doubledFactor) - factor;
-        const y = (Math.random() * doubledFactor) - factor;
-        const v = new Vector2D(x, y);
+        if (velocity.magnitude === 0) return;
 
-        const newVelocity = VectorUtil.add(movementComponent.velocity, v);
-        newVelocity.limit = movementComponent.maxSpeed;
+        // Normalize velocity to get the heading
+        const heading = VectorUtil.normalize(velocity);
 
-        movementComponent.velocity = newVelocity;
+        // Find the circle center ahead of the entity by scaling the heading to the circleDistance
+        const circleCenter = VectorUtil.multiply(heading, this.circleDistance);
+
+        // Adjust wander angle a little
+        this.wanderAngle += (Math.random() - 0.5) * 2 * this.angleChange;
+
+        // Offset point on the circle (in the direction of the wander angle)
+        const offset = new Vector2D(
+            Math.cos(this.wanderAngle),
+            Math.sin(this.wanderAngle)
+        );
+
+        // Scale the offset by circleRadius
+        const wanderOffset = VectorUtil.multiply(offset, this.circleRadius);
+
+        // Final steering force is the sum of circleCenter and wanderOffset
+        const wanderForce = VectorUtil.add(circleCenter, wanderOffset);
+
+        // Apply the wander force to the current velocity and ensure it does not exceed maxSpeed
+        const newVelocity = VectorUtil.add(velocity, wanderForce);
+        newVelocity.magnitude = movement.maxSpeed;
+
+        // Update the entity's velocity
+        movement.velocity = newVelocity;
     }
 }
 

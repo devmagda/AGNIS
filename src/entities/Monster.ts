@@ -1,6 +1,6 @@
 import Entity from "./Entity";
 import Vector2D from "../modules/math/vectors/Vector2D";
-import {FoodItemCount, HealthStat, HungerStat} from "./stats/StatLib";
+import {FoodItemCount, HealthStat, HungerStat, ViewRadius} from "./stats/StatLib";
 import {HealthHungerRule} from "./stats/rules/StatRuleLib";
 import {Ids} from "./EntityIds";
 import {GoalTree} from "../modules/goap/goals/GoalTree";
@@ -21,6 +21,7 @@ class Monster extends Entity {
         this.goalManager._actionManager.addAction(new EatAction(this._statsComponent.statsManager));
         this._statsComponent.statsManager.addStat(new FoodItemCount());
 
+        this._statsComponent.statsManager.addStat(new ViewRadius());
 
         this.goalManager.addGoalTree(new IdleGoal(this._behaviourComponent));
         this.goalManager._actionManager.addAction(new IdleAction(this._behaviourComponent));

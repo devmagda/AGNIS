@@ -27,7 +27,7 @@ export default abstract class Entity extends ModelEntity implements Drawable {
 
     protected _movementComponent: MovementComponent;
 
-    get movementComponent() {
+    get movementComponent(): MovementComponent {
         return this._movementComponent;
     }
 

@@ -137,6 +137,13 @@ class HungerStat extends GrowingStat {
     }
 }
 
+class ViewRadius extends Stat {
+    static id = "viewRadius";
+    constructor(viewRadius: number = 100) {
+        super(ViewRadius.id, viewRadius, 0);
+    }
+}
+
 export {
     HealthStat,
     DurabilityStat,
@@ -154,5 +161,6 @@ export {
     ManaRegenStat,
     ExperienceStat,
     HungerStat,
-    FoodItemCount
+    FoodItemCount,
+    ViewRadius
 };

@@ -4,14 +4,15 @@ import {HungerStat} from "../stats/StatLib";
 import {EatAction} from "../actions/ActionLib";
 import {WanderGoal} from "./WanderGoal";
 import BehaviourComponent from "../components/BehaviourComponent";
+import {ActionManager} from "../../modules/goap/actions/ActionManager";
 
 class EatGoal extends BaseGoal {
     static id = 'goal-eat';
     private readonly _statsManager: StatsManager;
+    private _lastHunger = 0;
     constructor(statsManager: StatsManager, behaviourComponent: BehaviourComponent) {
         super(EatGoal.id);
         this._statsManager = statsManager;
-
         this.addSubGoal(new WanderGoal(behaviourComponent));
     }
 
@@ -27,7 +28,7 @@ class EatGoal extends BaseGoal {
     isSatisfied(): boolean {
         const hungerStat = this._statsManager.getStatById(HungerStat.id);
         if(hungerStat) {
-            return hungerStat.factor < 0.10;
+            return this._lastHunger > hungerStat.value;
         } else {
             return false;
         }
@@ -41,6 +42,17 @@ class EatGoal extends BaseGoal {
 
     getDescription(): string {
         return "If we have food items, we will eat one";
+    }
+
+    execute(actionManager: ActionManager): boolean {
+        const executed = super.execute(actionManager);
+        const hungerStat = this._statsManager.getStatById(HungerStat.id);
+
+        if(executed && hungerStat) {
+            this._lastHunger = hungerStat.value;
+            return true;
+        }
+        return false;
     }
 }
 
