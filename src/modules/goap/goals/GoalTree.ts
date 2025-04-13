@@ -27,9 +27,9 @@ class GoalTree {
             const executed = currentGoal.execute(this._actionManager);
             const satisfied = currentGoal.isSatisfied();
 
-            console.log('Current goal <' + currentGoal.id + '> is:');
-            if(executed) console.log('executed');
-            if(satisfied) console.log('satisfied');
+            //console.log('Current goal <' + currentGoal.id + '> is:');
+            //if(executed) console.log('executed');
+            //if(satisfied) console.log('satisfied');
 
             if(executed && satisfied) {
                 return currentGoal;

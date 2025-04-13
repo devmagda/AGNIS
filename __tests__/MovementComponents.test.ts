@@ -4,6 +4,7 @@ import VectorUtil from "../src/modules/math/vectors/VectorUtil";
 import {BouncedMovementComponent} from "../src/entities/components/movement/BouncedMovementComponent";
 import {WrappedMovementComponent} from "../src/entities/components/movement/WrappedMovementComponent";
 import {BorderedMovementComponent} from "../src/entities/components/movement/BorderedMovementComponent";
+import {MovementSpeed, Size} from "../src/entities/stats/StatLib";
 
 describe('MovementComponent', () => {
     let component: MovementComponent;
@@ -11,14 +12,13 @@ describe('MovementComponent', () => {
     beforeEach(() => {
         const location = new Vector2D(0, 0);
         const maxSpeed = 10;
-        component = new MovementComponent(location, maxSpeed);
+        component = new MovementComponent(location, new MovementSpeed(new Size(1), maxSpeed));
     });
 
     test('constructor initializes location, velocity, orientation, and maxSpeed', () => {
         expect(component.location).toEqual(new Vector2D(0, 0));
         expect(component.velocity).toEqual(VectorUtil.zero());
         expect(component.orientation).toEqual(VectorUtil.north());
-        expect(component.maxSpeed).toBe(10);
     });
 
     test('applyForce updates acceleration correctly', () => {
@@ -44,7 +44,7 @@ describe('BorderedMovementComponent', () => {
         const maxSpeed = 10;
         const a = new Vector2D(0, 0);
         const b = new Vector2D(10, 10);
-        borderedComponent = new BorderedMovementComponent(location, maxSpeed, a, b);
+        borderedComponent = new BorderedMovementComponent(location, new MovementSpeed(new Size(1), maxSpeed), a, b);
     });
 
     test('isOutOfBounds correctly detects out-of-bounds locations', () => {

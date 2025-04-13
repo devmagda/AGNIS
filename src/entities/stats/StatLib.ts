@@ -1,6 +1,7 @@
 // StatLib.ts - A collection of common stats for games
 import {Stat} from "../../modules/stats/Stat";
 import {GrowingStat} from "../../modules/stats/GrowingStat";
+import {MovementComponent} from "../components/movement/MovementComponent";
 
 class HealthStat extends Stat {
     static id = "health"; // Static id for HealthStat
@@ -129,18 +130,91 @@ class ExperienceStat extends Stat {
     }
 }
 
-class HungerStat extends GrowingStat {
-    static id = "hunger";
+class ViewRadius extends Stat {
+    static id = "viewRadius";
+    private _size: Size
 
-    constructor(baseValue: number = 100) {
-        super(HungerStat.id, baseValue, 0.01);
+
+    constructor(size: Size, viewRadius: number = 100) {
+        super(ViewRadius.id, viewRadius);
+        this._size = size;
+    }
+
+    get value(): number {
+        const t = super.value;
+        return this.scale(t);
+    }
+
+    get baseValue(): number {
+        const t = super.baseValue;
+        return this.scale(t);
+    }
+
+    scale(value: number) {
+        return value * (1 + this._size.value / 100);
     }
 }
 
-class ViewRadius extends Stat {
-    static id = "viewRadius";
-    constructor(viewRadius: number = 100) {
-        super(ViewRadius.id, viewRadius, 0);
+class MovementSpeed extends GrowingStat {
+    static id = "movementSpeed";
+    private _sizeStat: Size;
+    constructor(sizeStat: Size, maxMovementSpeed: number = 0.1) {
+        super(MovementSpeed.id, maxMovementSpeed, 0);
+        this._sizeStat = sizeStat;
+    }
+
+    get value(): number {
+        const t = super.value;
+        return this.scale(t);
+    }
+
+    get baseValue(): number {
+        const t = super.baseValue;
+        return this.scale(t);
+    }
+
+    scale(value: number) {
+        return value * (9.81 / this._sizeStat.value);
+    }
+}
+
+class HungerStat extends GrowingStat {
+    static id = "hunger";
+    _movementSpeed: MovementSpeed;
+
+    constructor(movementSpeed: MovementSpeed, baseValue: number = 100) {
+        super(HungerStat.id, baseValue, 0.002);
+        this._movementSpeed = movementSpeed;
+    }
+
+    applyDecay(deltaTime: number): void {
+        const decay = this.decayRate;
+        const deltaDecay = decay * deltaTime;
+
+        const hungerFactor = 0.2;
+        const movementSpeed = this._movementSpeed.value;
+        const movementHunger = movementSpeed * hungerFactor;
+        const deltaMovementHunger = movementHunger * deltaTime;
+
+        const sum = deltaDecay + deltaMovementHunger;
+
+        this._value += sum;
+
+        if (this._value > this.baseValue) {
+            this._value = this.baseValue;
+        }
+    }
+
+
+    scale(value: number) {
+        return value * (9.81 / this._movementSpeed.value);
+    }
+}
+
+class Size extends Stat {
+    static id = "size";
+    constructor(size: number = 5 + Math.random() * 50) {
+        super(Size.id, size, 0);
     }
 }
 
@@ -162,5 +236,7 @@ export {
     ExperienceStat,
     HungerStat,
     FoodItemCount,
-    ViewRadius
+    ViewRadius,
+    MovementSpeed,
+    Size
 };

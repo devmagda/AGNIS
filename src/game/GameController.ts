@@ -17,11 +17,9 @@ class GameController extends Controller {
             this._view.update(this._model);
         });
         EventBus.getInstance().on<TouchEvent>(EventNames.TouchStart, (event: TouchEvent) => {
-            for(let i = 0; i < event.touches.length; i++) {
-                const touch = event.touches[i];
-                this._model.add(new Food(new Vector2D(touch.clientX, touch.clientY)));
-                this._view.update(this._model);
-            }
+            const touch = event.touches[0];
+            this._model.add(new Food(new Vector2D(touch.clientX, touch.clientY)));
+            this._view.update(this._model);
         });
     }
 }

@@ -7,7 +7,7 @@ class BouncedMovementComponent extends ScreenMovementComponent {
         this._velocity = VectorUtil.add(this._velocity, this._acceleration);
 
         // Limit velocity by max speed
-        this._velocity.limit = this._maxSpeed;
+        this._velocity.limit = this._maxSpeed.baseValue;
 
         // Update location based on velocity and deltaTime
         this._location = VectorUtil.add(this._location, VectorUtil.multiply(this._velocity, deltaTime));
@@ -24,6 +24,7 @@ class BouncedMovementComponent extends ScreenMovementComponent {
         }
 
         this._resetAcceleration();
+        this._maxSpeed.reset();
     }
 }
 

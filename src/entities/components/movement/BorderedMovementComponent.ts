@@ -1,8 +1,10 @@
 import Vector2D from "../../../modules/math/vectors/Vector2D";
 import {MovementComponent} from "./MovementComponent";
+import {Stat} from "../../../modules/stats/Stat";
+import {MovementSpeed} from "../../stats/StatLib";
 
 class BorderedMovementComponent extends MovementComponent {
-    constructor(location: Vector2D, maxSpeed: number, a: Vector2D, b: Vector2D) {
+    constructor(location: Vector2D, maxSpeed: MovementSpeed, a: Vector2D, b: Vector2D) {
         super(location, maxSpeed);
         this._a = a;
         this._b = b;

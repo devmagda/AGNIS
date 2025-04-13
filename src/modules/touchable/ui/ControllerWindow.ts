@@ -23,7 +23,6 @@ class ControllerWindow extends ButtonWindow {
         });
         const reloadButton = AppWindowUtil.createButton("Reload", () => {
             game.controller.reload();
-            EventBus.getInstance().reset();
         });
         const spawnButton = AppWindowUtil.createButton("Spawn", () => {
             const model = game.controller.model;

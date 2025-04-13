@@ -1,106 +1,81 @@
 import Vector2D from "../math/vectors/Vector2D";
-import {Colors} from "../../constants";
-import {StatsComponent} from "../../entities/components/StatsComponent";
-import {HealthStat, HungerStat} from "../../entities/stats/StatLib";
+import { Colors } from "../../constants";
+import {HungerStat, Size, ViewRadius} from "../../entities/stats/StatLib";
 import VectorUtil from "../math/vectors/VectorUtil";
-import Wander from "../behaviors/steering/Wander";
+import Entity from "../../entities/Entity";
+import {DrawUtil} from "./DrawUtil";
+import {StatDrawUtil} from "./StatDrawUtil";
 
 class EntityRenderer {
-    static drawEntity(ctx: CanvasRenderingContext2D, position: Vector2D, rotation: Vector2D, radius: number, statsComponent: StatsComponent) {
-        const statManager = statsComponent.statsManager;
+    static drawEntity(ctx: CanvasRenderingContext2D, entity: Entity, positionOverride: Vector2D | undefined = undefined) {
+        const movement = entity.movementComponent;
+        const position = positionOverride ? positionOverride : movement.location;
+        const velocity = movement.velocity;
+        const rotation = VectorUtil.normalize(movement.orientation);
 
+        const stats = entity.statComponent.statsManager;
+
+        const sizeStat = stats.getStatById(Size.id);
+        const radius = sizeStat?.value ?? 10;
         const minimalRadius = 10;
 
-        const healthStat = statManager.getStatById(HealthStat.id);
-        const healthFactor = healthStat ? healthStat.factor : -1;
+        const healthFactor = entity.aliveStat?.factor ?? -1;
+        const actualRadius = minimalRadius + (radius - minimalRadius) * healthFactor;
 
-        const actualRadius =  minimalRadius + (radius - minimalRadius) * healthFactor;
+        const lineEnd = new Vector2D(
+            position.x + rotation.x * actualRadius,
+            position.y + rotation.y * actualRadius
+        );
 
-        const lineEnd = new Vector2D(position.x + rotation.x * actualRadius, position.y + rotation.y * actualRadius);
+        // Draw filled entity circle
+        DrawUtil.circleFilled(ctx, position.x, position.y, actualRadius, Colors.bgHighlight);
 
-        // Draw the circle (entity)
-        ctx.beginPath();
-        ctx.arc(position.x, position.y, actualRadius, 0, Math.PI * 2);
-        ctx.fillStyle = Colors.bgHighlight;
-        ctx.fill();
-        ctx.closePath();
+        // Draw facing direction
+        DrawUtil.line(ctx, position.x, position.y, lineEnd.x, lineEnd.y, Colors.danger);
 
-        // Draw the direction line
-        ctx.beginPath();
-        ctx.moveTo(position.x, position.y);
-        ctx.lineTo(lineEnd.x, lineEnd.y);
-        ctx.strokeStyle = Colors.danger; // White line
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        ctx.closePath();
+        // Draw outline
+        DrawUtil.circle(ctx, position.x, position.y, actualRadius, Colors.danger);
 
+        // Draw health and hunger bars
+        const hungerStat = stats.getStatById(HungerStat.id);
+        const hungerFactor = hungerStat?.factor ?? -1;
 
-        //Draw an outline for the circle also
-        ctx.beginPath();
-        ctx.arc(position.x, position.y, actualRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = Colors.danger; // Set outline color
-        ctx.lineWidth = 2; // Set the outline thickness
-        ctx.stroke();
-        ctx.closePath();
-
-
-        const hungerStat = statManager.getStatById(HungerStat.id);
-
-        const hungerFactor = hungerStat ? hungerStat.factor : -1;
-
-        const lowerLeft = new Vector2D(position.x - radius, position.y + radius);
-
-        const barHeight = 5;
         const barWidth = 2 * radius;
+        const barHeight = 5;
+        const barX = position.x - radius;
+        const barY = position.y + radius;
 
-        ctx.beginPath();
-        ctx.rect(lowerLeft.x, lowerLeft.y, barWidth, barHeight);
-        ctx.fillStyle = '#8B0000'; // Dark red background
-        ctx.fill();
-        ctx.closePath();
+        StatDrawUtil.drawBarsStacked(ctx, barX, barY, barWidth, [
+            {
+                factor: healthFactor,
+                bgColor: '#8B0000',  // Dark red
+                fillColor: '#00FF00' // Green
+            },
+            {
+                factor: hungerFactor,
+                bgColor: '#bf9600',  // Dark yellow
+                fillColor: '#FFFF00' // Bright yellow
+            }
+        ], barHeight, 2);
 
-        ctx.beginPath();
-        ctx.rect(lowerLeft.x, lowerLeft.y, barWidth * Math.max(0, healthFactor), barHeight);
-        ctx.fillStyle = '#00FF00'; // Green for health
-        ctx.fill();
-        ctx.closePath();
-
-        // Draw hunger bar (yellow)
-        const hungerBarY = lowerLeft.y + barHeight + 2; // Slightly below health bar
-
-        ctx.beginPath();
-        ctx.rect(lowerLeft.x, hungerBarY, barWidth, barHeight);
-        ctx.fillStyle = '#bf9600'; // Dark yellow background
-        ctx.fill();
-        ctx.closePath();
-
-        ctx.beginPath();
-        ctx.rect(lowerLeft.x, hungerBarY, barWidth * Math.max(0, hungerFactor), barHeight);
-        ctx.fillStyle = '#FFFF00'; // Yellow for hunger
-        ctx.fill();
-        ctx.closePath();
+        const viewRadiusStat = stats.getStatById(ViewRadius.id);
+        if(viewRadiusStat) {
+            DrawUtil.circle(ctx, position.x, position.y, viewRadiusStat.value, Colors.danger);
+        }
     }
 
     static drawFood(ctx: CanvasRenderingContext2D, position: Vector2D, radius: number) {
-        const halfSize = radius;
+        // Glow effect
+        const glow = ctx.createRadialGradient(position.x, position.y, 0, position.x, position.y, radius * 2);
+        glow.addColorStop(0, "rgba(255, 255, 0, 0.6)");
+        glow.addColorStop(1, "rgba(255, 255, 0, 0)");
 
-        // Glow effect using radial gradient
-        const gradient = ctx.createRadialGradient(position.x, position.y, 0, position.x, position.y, radius * 2);
-        gradient.addColorStop(0, "rgba(255, 255, 0, 0.6)");
-        gradient.addColorStop(1, "rgba(255, 255, 0, 0)");
+        DrawUtil.circleGradient(ctx, position.x, position.y, radius * 2, glow);
 
-        ctx.beginPath();
-        ctx.fillStyle = gradient;
-        ctx.arc(position.x, position.y, radius * 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
-
-        // Draw centered yellow square
-        ctx.beginPath();
-        ctx.fillStyle = "#ffff00"; // bright yellow
-        ctx.fillRect(position.x - halfSize, position.y - halfSize, halfSize * 2, halfSize * 2);
-        ctx.closePath();
+        // Central square
+        const size = radius * 2;
+        DrawUtil.squareFilled(ctx, position.x - radius, position.y - radius, size, "#ffff00");
     }
 }
 
-export {EntityRenderer};
+export { EntityRenderer };

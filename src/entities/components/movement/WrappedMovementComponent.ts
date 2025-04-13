@@ -8,7 +8,7 @@ class WrappedMovementComponent extends ScreenMovementComponent {
         this._velocity = VectorUtil.add(this._velocity, this._acceleration);
 
         // Limit velocity by max speed
-        this._velocity.limit = this._maxSpeed;
+        this._velocity.limit = this._maxSpeed.baseValue;
 
         // Update location based on velocity and deltaTime
         this._location = VectorUtil.add(this._location, VectorUtil.multiply(this._velocity, deltaTime));
@@ -26,7 +26,11 @@ class WrappedMovementComponent extends ScreenMovementComponent {
             this._location.y = this.a.y;
         }
 
+        const speed = this._velocity.magnitude;
+
         this._resetAcceleration();
+        this._maxSpeed.reset();
+        this._maxSpeed.add(speed);
     }
 
     getWrappedPositions(radius: number): Vector2D[] {
