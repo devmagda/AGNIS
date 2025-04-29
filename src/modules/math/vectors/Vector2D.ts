@@ -67,8 +67,16 @@ export default class Vector2D {
     }
 
     normalize(): void {
-        this.limit = 1;  // Normalizing by limiting the vector's magnitude to 1
+        const x = this._position.get([0]);
+        const y = this._position.get([1]);
+        const length = Math.hypot(x, y); // same as Math.sqrt(x * x + y * y)
+
+        if (length !== 0) {
+            this._position.set([0], x / length);
+            this._position.set([1], y / length);
+        }
     }
+
 
     add(other: Vector2D): void {
         this._position = math.add(this._position, other.position);

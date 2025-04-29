@@ -5,14 +5,26 @@ import Entity from "../Entity";
 import SeekTarget from "../../modules/behaviors/steering/SeekTarget";
 import Behaviour from "../../modules/behaviors/Behaviour";
 import Wander from "../../modules/behaviors/steering/Wander";
+import Idle from "../../modules/behaviors/steering/Idle";
 
 class BehaviorComponent {
     private _target: Vector2D; // Target used by behaviors like SeekTarget
 
     constructor() {
         this._behaviorManager = new BehaviorManager(); // Initialize the BehaviorManager
-        this._currentBehavior = this._behaviorManager.getBehavior('Wander') || new Wander(); // Default to Wander
+        this.behaviorManager.addBehavior(new SeekTarget(new Vector2D(0,0)));
+        this.behaviorManager.addBehavior(new Wander());
+        this.behaviorManager.addBehavior(new Idle());
+        this._currentBehavior = this._behaviorManager.getBehavior(Idle.name) || new Idle(); // Default to Wander
         this._target = new Vector2D(0, 0); // Default target location
+    }
+
+    isIdle(): boolean {
+        return this._currentBehavior instanceof Idle;
+    }
+
+    setIdle(): void {
+        this._currentBehavior = this._behaviorManager.getBehavior(Idle.name) || new Idle();
     }
 
     private _currentBehavior: Behaviour;

@@ -14,6 +14,9 @@ class GrowingStat extends Stat {
         }
     }
 
+    reset() {
+        this._value = 0;
+    }
 }
 
 export {GrowingStat};

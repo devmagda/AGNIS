@@ -13,7 +13,12 @@ class GameController extends Controller {
     constructor(view: GameView, model: GameModel) {
         super(view, model);
         EventBus.getInstance().on<MouseEvent>(EventNames.MouseClick, (event: MouseEvent) => {
-            this._model.add(new Food(IDGen.getId("food"), new Vector2D(event.clientX, event.clientY)));
+            this._model.add(new Food(new Vector2D(event.clientX, event.clientY)));
+            this._view.update(this._model);
+        });
+        EventBus.getInstance().on<TouchEvent>(EventNames.TouchStart, (event: TouchEvent) => {
+            const touch = event.touches[0];
+            this._model.add(new Food(new Vector2D(touch.clientX, touch.clientY)));
             this._view.update(this._model);
         });
     }

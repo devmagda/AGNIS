@@ -6,8 +6,7 @@ class BehaviorManager {
     _behaviors: Behaviour[] = [];
 
     constructor() {
-        this._behaviors.push(new SeekMouse());
-        this._behaviors.push(new Wander());
+
     }
 
     // Add a new behavior to the list of available behaviors

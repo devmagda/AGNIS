@@ -23,12 +23,11 @@ class ControllerWindow extends ButtonWindow {
         });
         const reloadButton = AppWindowUtil.createButton("Reload", () => {
             game.controller.reload();
-            EventBus.getInstance().reset();
         });
         const spawnButton = AppWindowUtil.createButton("Spawn", () => {
             const model = game.controller.model;
             const view = game.controller.view;
-            model.add(new Monster(IDGen.getId("entity"), VectorUtil.getRandom(VectorUtil.canvasSize())));
+            model.add(new Monster(VectorUtil.getRandom(VectorUtil.canvasSize())));
             view.update(model);
         });
 

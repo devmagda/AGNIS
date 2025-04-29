@@ -3,8 +3,8 @@ class Stat {
     private _baseValueModifiers: Map<string, number>;
     private _decayRateModifiers: Map<string, number>;
 
-    constructor(name: string, baseValue: number, decayRate: number = 0) {
-        this._name = name;
+    constructor(id: string, baseValue: number, decayRate: number = 0) {
+        this._id = id;
         this._baseValue = baseValue;
         this._value = baseValue;  // Initially, the value is set to baseValue
         this._decayRate = decayRate;
@@ -12,10 +12,10 @@ class Stat {
         this._decayRateModifiers = new Map();
     }
 
-    private _name: string;
+    private readonly _id: string;
 
-    get name() {
-        return this._name;
+    get id() {
+        return this._id;
     }
 
     protected _value: number;
@@ -99,11 +99,22 @@ class Stat {
 
     // Debug helper to inspect the stat's current state
     debug(): string {
-        return `Stat ${this._name}: value=${this._value}, baseValue=${this.baseValue}, decayRate=${this.decayRate}`;
+        return `Stat ${this._id}: value=${this._value}, baseValue=${this.baseValue}, decayRate=${this.decayRate}`;
     }
 
     reset() {
         this._value = this.baseValue;
+    }
+
+    add(value: number): void {
+        this._value += value;
+        if(this._value > this.baseValue) {
+            this.reset();
+        }
+    }
+
+    subtract(value: number) {
+        this.add(-value);
     }
 }
 

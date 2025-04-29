@@ -13,6 +13,7 @@ class AppWindowUtil {
         classList.push("tui");
         button.textContent = text;
         button.onclick = onClick;
+        button.addEventListener("touchstart", onClick);
         Object.assign(button.style, styles);
         button.classList.add(...classList);
         return button;
@@ -40,12 +41,19 @@ class AppWindowUtil {
 
     static createGameCanvas(id: string, width: number, height: number, styles: Partial<CSSStyleDeclaration> = {}, classList: string[] = []): HTMLCanvasElement {
         const canvas = AppWindowUtil.createCanvas(id, width, height, styles, classList);
-        window.addEventListener('resize', () => {
-            const newWidth = window.innerWidth;
-            const newHeight = window.innerHeight;
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-        });
+        const resizeCanvas = () => {
+            const displayWidth = window.innerWidth;
+            const displayHeight = window.innerHeight;
+
+            canvas.width = displayWidth;
+            canvas.height = displayHeight;
+            canvas.style.width = `${displayWidth}px`;
+            canvas.style.height = `${displayHeight}px`;
+        };
+
+        resizeCanvas();
+
+        window.addEventListener('resize', resizeCanvas);
         return canvas;
     }
 
