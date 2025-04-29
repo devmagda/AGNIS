@@ -16,6 +16,7 @@ class Monster extends Entity {
     viewRadiusStat: ViewRadius;
 
 
+
     constructor(spawnLocation: Vector2D) {
         super(spawnLocation, Monster.getMaxSpeed(Math.random()), new HealthStat());
         this._statsComponent.statsManager.addStat(new HungerStat(this.movementSpeed));

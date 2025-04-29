@@ -3,6 +3,7 @@ import {StatsManager} from "../../modules/stats/StatManager";
 import {FoodItemCount, HungerStat} from "../stats/StatLib";
 import BehaviourComponent from "../components/BehaviourComponent";
 import Wander from "../../modules/behaviors/steering/Wander";
+import {Stat} from "../../modules/stats/Stat";
 
 class EatAction extends BaseAction {
     static id = 'action-eat';
@@ -26,7 +27,7 @@ class EatAction extends BaseAction {
         const {hungerStat, foodItemCountStat} = this.getStats();
 
         if(hungerStat && foodItemCountStat && !foodItemCountStat.isEmpty()) {
-            hungerStat.add(20);
+            hungerStat.subtract(20);
             foodItemCountStat.subtract(1);
             return true;
         }
@@ -36,7 +37,7 @@ class EatAction extends BaseAction {
         throw new Error("Method not implemented.");
     }
 
-    getStats(): { hungerStat: HungerStat; foodItemCountStat: FoodItemCount } {
+    getStats(): { hungerStat: Stat; foodItemCountStat: Stat } {
         const hungerStat = this._statsManager.getStatById(HungerStat.id);
         const foodItemCountStat = this._statsManager.getStatById(FoodItemCount.id);
 
